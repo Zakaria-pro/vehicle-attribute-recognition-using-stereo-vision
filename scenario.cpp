@@ -24,8 +24,9 @@ void Scenario::playVideoLeft(){
     while (true) {
         cap1.read(img);
         imshow("image", img);
-        waitKey(20);
+        waitKey(70);
     }
+    waitKey(0);
 }
 void Scenario::playVideoRight(){
     VideoCapture cap2(Scenario::path2);

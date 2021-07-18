@@ -19,7 +19,7 @@ class Scenario{
         string path1;
         string path2;
 
-        Vehicle vehicles[500];
+        //Vehicle vehicles[500];
 
         ofstream ExcelFile;
 
