@@ -5,52 +5,6 @@
 using namespace std;
 using namespace cv;
 
-struct Points{
-    /* ----- the points needed to calculate height----- */
-    struct ph{
-        // The two points in the left image
-        Point pl1, pl2;
-        // The two points in the right image
-        Point pr1, pr2;
-    };
-
-    /* ----- the points needed to calculate width----- */
-    struct pw{
-        // The two points in the left image
-        Point pl1, pl2;
-        // The two points in the right image
-        Point pr1, pr2;
-    };
-
-    /* ----- the points needed to calculate length----- */
-    struct pl{
-        // The two points in the left image
-        Point pl1, pl2;
-        // The two points in the right image
-        Point pr1, pr2;
-    };
-};
-
-struct Dimension{
-    float height;
-    float width;
-    float length;
-};
-
-struct Info{
-    string type;
-    string make;
-    string model;
-};
-
-void on_mouse( int e, int x, int y, int d, void *ptr )
-{
-    Point*p = (Point*)ptr;
-    p->x = x;
-    p->y = y;
-}
-
-
 class Vehicle {
     public:
         /* --------------------- Attributs -------------------------*/
