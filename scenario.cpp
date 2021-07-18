@@ -43,7 +43,7 @@ void Scenario::playVideoRight(){
 }
 
 void Scenario::WritetoExcel(){
-    Scenario::sFileExcel << "Files can be tricky, but it is fun enough!";
+    Scenario::sFileExcel << "Hello world!";
     Scenario::sFileExcel.close();
 }
 

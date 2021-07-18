@@ -27,7 +27,7 @@ class Scenario{
         // ------ Methods ------//
 
         Scenario(string pathVleft, string pathVright); // create two videos and an excel file
-
+        Scenario();
         void playVideoLeft();
         void playVideoRight();
         void WritetoExcel();

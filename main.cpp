@@ -15,8 +15,14 @@ int main(){
     string pathvl = "C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi";
     string pathvr = "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi";
     Scenario scenario43(pathvl, pathvr);
+
+    cout << scenario43.path1<< endl;
+    cout << scenario43.path2<< endl;
+
     scenario43.playVideoLeft();
     scenario43.playVideoRight();
+
+
     return 0;
 
 }
