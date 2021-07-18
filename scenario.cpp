@@ -10,16 +10,14 @@
 using namespace std;
 using namespace cv;
 
-#define Size 500
-
 
 Scenario::Scenario(string pathVleft, string pathVright){ // Constructor
     // Input
     cap1(pathVleft); // VideoLeft
     cap2(pathVright); // VideoRight
     id = "43";
-    // Output
 
+    // Output
     string filename = "scenario";
     filename = filename << id << ".xlsx";
     path = "C:/Users/hp/OneDrive/Bureau/Scenario43";

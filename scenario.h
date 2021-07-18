@@ -24,13 +24,12 @@ class Scenario{
 
         ofstream sFileExcel;
 
-    // ------ Methods ------//
 
-
-        Scenario(string pathVleft, string pathVright);
+        // ------ Methods ------//
+        Scenario(string pathVleft, string pathVright); // create two videos and an excel file
         void playVideoLeft();
         void playVideoRight();
-
+        void WritetoExcel();
 };
 
 #endif // SCENARIO_H
