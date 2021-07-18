@@ -50,12 +50,12 @@ struct Info{
     string model;
 };
 
-void on_mouse( int e, int x, int y, int d, void *ptr )
-{
-    Point*p = (Point*)ptr;
-    p->x = x;
-    p->y = y;
-}
+//void on_mouse( int e, int x, int y, int d, void *ptr )
+//{
+//    Point*p = (Point*)ptr;
+//    p->x = x;
+//    p->y = y;
+//}
 
 
 
@@ -75,6 +75,7 @@ class Vehicle {
 
 
         /* --------------------- Methods -------------------------*/
+        Vehicle();
         Vehicle(string pathImg1, string pathImg2);
 
         // 12 points

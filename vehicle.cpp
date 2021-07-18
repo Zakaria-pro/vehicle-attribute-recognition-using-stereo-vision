@@ -8,10 +8,11 @@ using namespace std;
 using namespace cv;
 
 
+Vehicle::Vehicle(){}
 
 Vehicle::Vehicle(string pathImg1, string pathImg2){ // Contructor
-    imgLeft = imread(pathImg1);
-    imgRight = imread(pathImg2);
+    Vehicle::imgLeft = imread(pathImg1);
+    Vehicle::imgRight = imread(pathImg2);
 }
 
 // 12 points

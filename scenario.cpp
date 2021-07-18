@@ -1,5 +1,7 @@
 #include "scenario.h"
 #include "vehicle.h"
+#include "mainwindow.h"
+
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -11,16 +13,9 @@ using namespace std;
 using namespace cv;
 
 Scenario::Scenario(string pathVleft, string pathVright){ // Constructor
-
-    // Input
     Scenario::path1 = pathVleft;
     Scenario::path2 = pathVright;
     Scenario::id = "43";
-
-    // Output
-    string filename = "scenario" + Scenario::id + ".xlsx";
-    string path = "C:/Users/hp/OneDrive/Bureau/Scenario43"+filename;
-    Scenario::sFileExcel.open(path);
 }
 
 void Scenario::playVideoLeft(){
@@ -41,9 +36,11 @@ void Scenario::playVideoRight(){
         waitKey(20);
     }
 }
-
-void Scenario::WritetoExcel(){
-    Scenario::sFileExcel << "Hello world!";
-    Scenario::sFileExcel.close();
+void Scenario::openExcelFile(){
+    string filename = "scenario" + Scenario::id + ".xlsx";
+    string path = "C:/Users/hp/OneDrive/Bureau/Scenario43"+filename;
+    Scenario::ExcelFile.open(path);
 }
+
+
 

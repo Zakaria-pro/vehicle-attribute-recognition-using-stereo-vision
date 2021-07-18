@@ -21,16 +21,16 @@ class Scenario{
 
         Vehicle vehicles[500];
 
-        ofstream sFileExcel;
+        ofstream ExcelFile;
 
 
         // ------ Methods ------//
 
-        Scenario(string pathVleft, string pathVright); // create two videos and an excel file
-        Scenario();
+        Scenario(string pathVleft,string pathVright); // create two videos and an excel file
+
         void playVideoLeft();
         void playVideoRight();
-        void WritetoExcel();
+        void openExcelFile();
 };
 
 #endif // SCENARIO_H
