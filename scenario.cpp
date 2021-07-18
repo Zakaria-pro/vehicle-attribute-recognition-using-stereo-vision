@@ -10,21 +10,21 @@
 using namespace std;
 using namespace cv;
 
-
 Scenario::Scenario(string pathVleft, string pathVright){ // Constructor
+
     // Input
-    cap1(pathVleft); // VideoLeft
-    cap2(pathVright); // VideoRight
-    id = "43";
+    Scenario::path1 = pathVleft;
+    Scenario::path2 = pathVright;
+    Scenario::id = "43";
 
     // Output
-    string filename = "scenario";
-    filename = filename << id << ".xlsx";
-    path = "C:/Users/hp/OneDrive/Bureau/Scenario43";
-    sFileExcel(filename);
+    string filename = "scenario" + Scenario::id + ".xlsx";
+    string path = "C:/Users/hp/OneDrive/Bureau/Scenario43"+filename;
+    Scenario::sFileExcel.open(path);
 }
 
 void Scenario::playVideoLeft(){
+    VideoCapture cap1(Scenario::path1); // VideoLeft
     Mat img;
     while (true) {
         cap1.read(img);
@@ -33,6 +33,7 @@ void Scenario::playVideoLeft(){
     }
 }
 void Scenario::playVideoRight(){
+    VideoCapture cap2(Scenario::path2);
     Mat img;
     while (true) {
         cap2.read(img);
@@ -42,6 +43,7 @@ void Scenario::playVideoRight(){
 }
 
 void Scenario::WritetoExcel(){
-    MyFile << "Files can be tricky, but it is fun enough!";
+    Scenario::sFileExcel << "Files can be tricky, but it is fun enough!";
+    Scenario::sFileExcel.close();
 }
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <vehicle.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -10,23 +11,23 @@
 
 #include <fstream>
 
-#define Size 500
-
 using namespace std;
 class Scenario{
     public:
         // ------ Attributes ------//
-        int id;
-        VideoCapture cap1;
-        VideoCapture cap2;
+        string id;
+        string path1;
+        string path2;
 
-        Vehicle vehicles[Size];
+        Vehicle vehicles[500];
 
         ofstream sFileExcel;
 
 
         // ------ Methods ------//
+
         Scenario(string pathVleft, string pathVright); // create two videos and an excel file
+
         void playVideoLeft();
         void playVideoRight();
         void WritetoExcel();
