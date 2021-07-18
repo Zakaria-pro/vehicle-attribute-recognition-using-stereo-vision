@@ -20,23 +20,50 @@ Scenario::Scenario(string pathVleft, string pathVright){ // Constructor
 
 void Scenario::playVideoLeft(){
     VideoCapture cap1(Scenario::path1); // VideoLeft
-    Mat img;
+    Mat frame1;
+
     while (true) {
-        cap1.read(img);
-        imshow("image", img);
+        cap1.read(frame1);
+        resize(frame1, frame1, Size(), 0.25, 0.25);
+        imshow("Video Left", frame1);
         waitKey(70);
     }
-    waitKey(0);
 }
-void Scenario::playVideoRight(){
+
+void Scenario::playVideoRight(){ // VideoRight
     VideoCapture cap2(Scenario::path2);
-    Mat img;
+    Mat frame2;
+
     while (true) {
-        cap2.read(img);
-        imshow("image", img);
-        waitKey(20);
+        cap2.read(frame2);
+        resize(frame2, frame2, Size(), 0.25, 0.25);
+        imshow("Video Right", frame2);
+        waitKey(70);
     }
 }
+
+void Scenario::playTwoVideos(){
+    VideoCapture cap1(Scenario::path1); // VideoLeft
+    VideoCapture cap2(Scenario::path2); // VideoRight
+
+    Mat frame1;
+    Mat frame2;
+
+    while (true) {
+        cap1.read(frame1);
+        resize(frame1, frame1, Size(), 0.25, 0.25);
+        imshow("Video Left", frame1);
+        waitKey(40);
+
+        cap2.read(frame2);
+        resize(frame2, frame2, Size(), 0.25, 0.25);
+        imshow("Video Right", frame2);
+        waitKey(40);
+    }
+    waitKey(0);
+
+}
+
 void Scenario::openExcelFile(){
     string filename = "scenario" + Scenario::id + ".xlsx";
     string path = "C:/Users/hp/OneDrive/Bureau/Scenario43"+filename;

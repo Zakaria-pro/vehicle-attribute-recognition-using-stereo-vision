@@ -24,9 +24,9 @@ int main(){
     //setup
     scenario43.openExcelFile();
 
-    scenario43.playVideoLeft();
-    scenario43.playVideoRight();
-
+    //scenario43.playVideoLeft();
+    //scenario43.playVideoRight();
+    scenario43.playTwoVideos();
 
 //A // detect a vehicle(the same vehicle in the two videos) --> stop the video
     // crop that vehicle from the video1 and video2 and get two images of the vehcile
