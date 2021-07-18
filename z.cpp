@@ -1,3 +1,4 @@
+/*
 #include "mainwindow.h"
 #include <QApplication>
 
@@ -26,7 +27,7 @@ void dsp1(){
     Mat right = imread("C:/Resources/right.jpg",IMREAD_COLOR);
 
     Point p;
-    /* -----------------  xl-yl --------------------*/
+
 
     //Create a window
     namedWindow("My Window", 1);
@@ -46,7 +47,7 @@ void dsp1(){
 
 
 
-    /* -----------------  xr-yr --------------------*/
+
 
     //Create a window
     namedWindow("My Window", 1);
@@ -89,7 +90,6 @@ void dsp2(){
     Mat left1  = imread("/home/hamza/wheel_spd/S2/Left/30m.png",IMREAD_COLOR);
     Mat right1 = imread("/home/hamza/wheel_spd/S2/Right/30m.png",IMREAD_COLOR);
 
-    /* ----------------- xl1-yl1 --------------------*/
 
     namedWindow("My Window", 1);
     setMouseCallback("My Window", on_mouse, &p );
@@ -99,10 +99,10 @@ void dsp2(){
     yl1=p.y;
     //    cout<<"xl1 is "<<p.x<<endl;
     //    cout<<"yl1 is "<<p.y<<endl;
-    /* -----------------------------------------------*/
 
 
-    /* ----------------- xr1-yr1 --------------------*/
+
+
 
     namedWindow("My Window", 1);
     setMouseCallback("My Window", on_mouse, &p );
@@ -112,7 +112,7 @@ void dsp2(){
     yr1=p.y;
     //    cout<<"xr1 is "<<p.x<<endl;
     //    cout<<"yr1 is "<<p.y<<endl;
-    /* -----------------------------------------------*/
+
 
 
 
@@ -131,4 +131,4 @@ void distance_deplacement(){
     dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
     cout<<"distance de déplacement:"<<dist_dep/1000<<"m"<<endl;
 }
-
+*/
