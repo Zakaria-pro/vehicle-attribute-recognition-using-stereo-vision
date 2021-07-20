@@ -28,12 +28,14 @@ SOURCES += \
         mainwindow.cpp \
     z.cpp \
     scenario.cpp \
-    vehicle.cpp
+    vehicle.cpp \
+    blob.cpp
 
 HEADERS += \
         mainwindow.h \
     scenario.h \
-    vehicle.h
+    vehicle.h \
+    blob.h
 
 FORMS += \
         mainwindow.ui

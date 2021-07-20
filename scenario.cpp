@@ -59,6 +59,7 @@ void Scenario::playTwoVideos(){
         resize(frame2, frame2, Size(), 0.25, 0.25);
         imshow("Video Right", frame2);
         waitKey(40);
+
     }
     waitKey(0);
 
