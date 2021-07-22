@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "scenario.h"
 #include "vehicle.h"
+
+
 #include "blob.h"
+#include "blob.cpp"
 
 #include <QApplication>
 
@@ -43,29 +46,35 @@ double round1(double d);
 
 int main(){
 
-    // create a scenario
+    /* --------------------------------- Code Design ------------------------------
+     *A  Start Video(left, right)
+         each time a vehicle crosses the line we stop the videos
+         we take the vehicle that crosses the line
+         we crop that vehicle
+
+         put the two images of the vehicle (left and right) into the folder vehicle+"id"
+         get the path of the two images and create an object Vehicle
+
+         Call the constructor to build an object vehicle with the two images and the id
+         Show the two images
+
+         get Points
+
+         get Dimension(height, length, width)
+         set_info(make, model)
+         add_vehicle_attribute_to_excel_sheet
+         go to A
+    * ------------------------------------------------------------------------------
+    */
+
+    // --------------------------- create a scenario  -------------------------//
     string pathvl = "C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi";
     string pathvr = "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi";
     Scenario scenario43(pathvl, pathvr);
+    // -----------------------------------------------------------------------//
 
 
-    cout << "path to video left : " << scenario43.path1 << endl;
-    cout << "path to video right : " << scenario43.path2 << endl;
-
-    //setup
-    //scenario43.openExcelFile();
-
-    //scenario43.playVideoLeft();
-    //scenario43.playVideoRight();
-    //scenario43.playTwoVideos();
-
-    //scenario43.PlayAndDetect();
-    // ----------------------------------------------------------------------------------------------------------//
-
-
-
-
-    // -------------- play video - two frames----------------//
+    // -----------------------------play video---------------------------//
     cv::VideoCapture capVideo;
 
     cv::Mat imgFrame1;
@@ -77,32 +86,43 @@ int main(){
 
     int carCount = 0;
 
+
     capVideo.open("C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi");
 
-    if (!capVideo.isOpened()) {                                                 // if unable to open video file
-        std::cout << "error reading video file" << std::endl << std::endl;      // show error message
-        _getch();                   // it may be necessary to change or remove this line if not using Windows
-        return(0);                                                              // and exit program
+    if (!capVideo.isOpened()) {
+        std::cout << "error reading video file" << std::endl << std::endl;
+        _getch();
+        return(0); // exit program
     }
-
     if (capVideo.get(CV_CAP_PROP_FRAME_COUNT) < 2) {
         std::cout << "error: video file must have at least two frames";
-        _getch();                   // it may be necessary to change or remove this line if not using Windows
+        _getch();
         return(0);
     }
 
     capVideo.read(imgFrame1);
     capVideo.read(imgFrame2);
+    //-------------------------------------------------------------------//
 
 
-    // -------------- define the crossing line ----------------//
-    int intHorizontalLinePosition = (int)round1((double)imgFrame1.rows * 0.35);
 
+
+
+
+    // -------------- define the crossing line ----------------------------------//
+    int intHorizontalLinePosition = (int)round1((double)imgFrame1.rows * 0.5);
+    std::cout << intHorizontalLinePosition << endl;
     crossingLine[0].x = 0;
-    crossingLine[0].y = intHorizontalLinePosition;
+    crossingLine[0].y = 1600;
+    crossingLine[1].x = 1800;
+    crossingLine[1].y = 700;
+    // -------------------------------------------------------------------------//
 
-    crossingLine[1].x = imgFrame1.cols - 1;
-    crossingLine[1].y = intHorizontalLinePosition;
+
+
+
+
+
 
     char chCheckForEscKey = 0;
 
@@ -110,9 +130,15 @@ int main(){
 
     int frameCount = 2;
 
+
+
+
+
+
+
     while (capVideo.isOpened() && chCheckForEscKey != 27) {
 
-        // Difference
+        // -------------------------- BINARY THRESHOLD ---------------------//
         std::vector<Blob> currentFrameBlobs;
 
         cv::Mat imgFrame1Copy = imgFrame1.clone();
@@ -129,10 +155,10 @@ int main(){
 
         cv::absdiff(imgFrame1Copy, imgFrame2Copy, imgDifference);
 
-        // Trashehold
         cv::threshold(imgDifference, imgThresh, 30, 255.0, CV_THRESH_BINARY);
 
-        cv::imshow("imgThresh", imgThresh);
+        // cv::resize(imgThre)
+        // cv::imshow("imgThresh", imgThresh);
 
         cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
         cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
@@ -145,32 +171,45 @@ int main(){
             cv::erode(imgThresh, imgThresh, structuringElement5x5);
 
         }
+        // -------------------------------------------------------------------//
 
+
+
+
+
+
+
+        // -------------------------------- Contours ---------------------------- //
         cv::Mat imgThreshCopy = imgThresh.clone();
-
-
-
-        // Contours
         std::vector<std::vector<cv::Point> > contours;
 
         cv::findContours(imgThreshCopy, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
         drawAndShowContours(imgThresh.size(), contours, "imgContours");
+        // -----------------------------------------------------------------------//
 
 
-        // convexHulls
+
+
+
+
+
+        // ------------------------------convexHulls------------------------------- //
         std::vector<std::vector<cv::Point> > convexHulls(contours.size());
 
         for (unsigned int i = 0; i < contours.size(); i++) {
             cv::convexHull(contours[i], convexHulls[i]);
         }
+        // drawAndShowContours(imgThresh.size(), convexHulls, "imgConvexHulls");
+        // ------------------------------------------------------------------------//
 
-        drawAndShowContours(imgThresh.size(), convexHulls, "imgConvexHulls");
 
-        // imgCurrent Frame blobs - filter noise within the video
+
+
+
+        // -----------------------filter noise within the video-------------------- //
         for (auto &convexHull : convexHulls) {
             Blob possibleBlob(convexHull);
-
             if (possibleBlob.currentBoundingRect.area() > 400 &&
                 possibleBlob.dblCurrentAspectRatio > 0.2 &&
                 possibleBlob.dblCurrentAspectRatio < 4.0 &&
@@ -178,12 +217,19 @@ int main(){
                 possibleBlob.currentBoundingRect.height > 30 &&
                 possibleBlob.dblCurrentDiagonalSize > 60.0 &&
                 (cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.currentBoundingRect.area()) > 0.50) {
+
                 currentFrameBlobs.push_back(possibleBlob);
             }
         }
+        // drawAndShowContours(imgThresh.size(), currentFrameBlobs, "imgCurrentFrameBlobs");
+        // ------------------------------------------------------------------------ //
 
-        drawAndShowContours(imgThresh.size(), currentFrameBlobs, "imgCurrentFrameBlobs");
 
+
+
+
+
+        // ----------------------------- imgBlobs ----------------------------------------//
         if (blnFirstFrame == true) {
             for (auto &currentFrameBlob : currentFrameBlobs) {
                 blobs.push_back(currentFrameBlob);
@@ -191,29 +237,54 @@ int main(){
         } else {
             matchCurrentFrameBlobsToExistingBlobs(blobs, currentFrameBlobs);
         }
+        //drawAndShowContours(imgThresh.size(), blobs, "imgBlobs");
+        // --------------------------------------------------------------------------//
 
-        drawAndShowContours(imgThresh.size(), blobs, "imgBlobs");
 
+
+
+
+
+        // ---------------------------------drawBlobInfo------------------------------//
         imgFrame2Copy = imgFrame2.clone();          // get another copy of frame 2 since we changed the previous frame 2 copy in the processing above
+        //drawBlobInfoOnImage(blobs, imgFrame2Copy);
+        //----------------------------------------------------------------------------//
 
-        drawBlobInfoOnImage(blobs, imgFrame2Copy);
+
+
+
+
+
+
+
+        // ---------------------------------drawCountonImage---------------------------- //
 
         bool blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLine(blobs, intHorizontalLinePosition, carCount);
 
         if (blnAtLeastOneBlobCrossedTheLine == true) {
-            cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_GREEN, 2);
+            cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_GREEN, 5);
         } else {
-            cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_RED, 2);
+            cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_YELLOW, 5);
+
         }
-
-        drawCarCountOnImage(carCount, imgFrame2Copy);
-
+        // drawCarCountOnImage(carCount, imgFrame2Copy);
+        cv::resize(imgFrame2Copy, imgFrame2Copy, Size(), 0.25, 0.25);
         cv::imshow("imgFrame2Copy", imgFrame2Copy);
+        // ------------------------------------------------------------------------------//
 
-        //cv::waitKey(0);                 // uncomment this line to go frame by frame for debugging
 
-        // now we prepare for the next iteration
 
+
+
+
+        //cv::waitKey(0);  // uncomment this line to go frame by frame for debugging
+
+
+
+
+
+
+        //------------------prepare for the next iteration --------------------------//
         currentFrameBlobs.clear();
 
         imgFrame1 = imgFrame2.clone();           // move frame 1 up to where frame 2 is
@@ -228,7 +299,10 @@ int main(){
         blnFirstFrame = false;
         frameCount++;
         chCheckForEscKey = cv::waitKey(1);
-    }
+        // --------------------------------------------------------------------------//
+
+
+    } //end while
 
     if (chCheckForEscKey != 27) {               // if the user did not press esc (i.e. we reached the end of the video)
         cv::waitKey(0);                         // hold the windows open to allow the "end of video" message to show
@@ -236,36 +310,12 @@ int main(){
     // note that if the user did press esc, we don't need to hold the windows open, we can simply let the program end which will close the windows
 
 
-
-
-
-
-
-//A // Start Video(left, right)
-    // each time a vehicle crosses the line we stop the videos
-    // we take the vehicle that crosses the line
-    // we crop that vehicle
-
-    // put the two images of the vehicle (left and right) into the folder vehicle+"id"
-    // get the path of the two images and create an object Vehicle
-
-    // Call the constructor to build an object vehicle with the two images and the id
-    // Show the two images
-
-    // get Points
-
-    // get Dimension(height, length, width)
-    // set_info(make, model)
-    // add_vehicle_attribute_to_excel_sheet
-    // go to A
-
-
     return 0;
-}
+} //end main
 
 
 
-// ----------------------------------------------------------------------------------------------------------//
+// ----------------------------- Functions Implementation ----------------------------------------------------------//
 double round1(double d)
 {
   return std::floor(d + 0.5);
@@ -362,6 +412,7 @@ void drawAndShowContours(cv::Size imageSize, std::vector<std::vector<cv::Point> 
 
     cv::drawContours(image, contours, -1, SCALAR_WHITE, -1);
 
+    cv::resize(image, image, Size(), 0.25, 0.25);
     cv::imshow(strImageName, image);
 }
 
@@ -379,6 +430,7 @@ void drawAndShowContours(cv::Size imageSize, std::vector<Blob> blobs, std::strin
     }
     cv::drawContours(image, contours, -1, SCALAR_WHITE, -1);
 
+    cv::resize(image, image, Size(), 0.25, 0.25);
     cv::imshow(strImageName, image);
 }
 
@@ -425,7 +477,7 @@ void drawCarCountOnImage(int &carCount, cv::Mat &imgFrame2Copy) {
 
     int intFontFace = CV_FONT_HERSHEY_SIMPLEX;
     double dblFontScale = (imgFrame2Copy.rows * imgFrame2Copy.cols) / 300000.0;
-    int intFontThickness = (int)round1((double)dblFontScale * 1.5);
+    int intFontThickness = (int)round1((double)dblFontScale * 1.1);
 
     cv::Size textSize = cv::getTextSize(std::to_string(carCount), intFontFace, dblFontScale, intFontThickness, 0);
 
@@ -437,6 +489,8 @@ void drawCarCountOnImage(int &carCount, cv::Mat &imgFrame2Copy) {
     cv::putText(imgFrame2Copy, std::to_string(carCount), ptTextBottomLeftPosition, intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 
 }
+// -------------------------------------------------------------------------------------
+
 
 
 
