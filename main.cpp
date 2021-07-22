@@ -21,7 +21,7 @@ using namespace cv;
 
 #define SHOW_STEPS            // un-comment or comment this line to show steps or not
 
-// global variables ///////////////////////////////////////////////////////////////////////////////
+// Colors ///////////////////////////////////////////////////////////////////////////////
 const cv::Scalar SCALAR_BLACK = cv::Scalar(0.0, 0.0, 0.0);
 const cv::Scalar SCALAR_WHITE = cv::Scalar(255.0, 255.0, 255.0);
 const cv::Scalar SCALAR_YELLOW = cv::Scalar(0.0, 255.0, 255.0);
@@ -57,7 +57,7 @@ int main(){
 
     //scenario43.playVideoLeft();
     //scenario43.playVideoRight();
-    scenario43.playTwoVideos();
+    //scenario43.playTwoVideos();
 
     //scenario43.PlayAndDetect();
     // ----------------------------------------------------------------------------------------------------------//
@@ -65,7 +65,7 @@ int main(){
 
 
 
-    // ----------------------------------------------------------------------------------------------------------//
+    // -------------- play video - two frames----------------//
     cv::VideoCapture capVideo;
 
     cv::Mat imgFrame1;
@@ -94,6 +94,8 @@ int main(){
     capVideo.read(imgFrame1);
     capVideo.read(imgFrame2);
 
+
+    // -------------- define the crossing line ----------------//
     int intHorizontalLinePosition = (int)round1((double)imgFrame1.rows * 0.35);
 
     crossingLine[0].x = 0;
@@ -110,6 +112,7 @@ int main(){
 
     while (capVideo.isOpened() && chCheckForEscKey != 27) {
 
+        // Difference
         std::vector<Blob> currentFrameBlobs;
 
         cv::Mat imgFrame1Copy = imgFrame1.clone();
@@ -126,6 +129,7 @@ int main(){
 
         cv::absdiff(imgFrame1Copy, imgFrame2Copy, imgDifference);
 
+        // Trashehold
         cv::threshold(imgDifference, imgThresh, 30, 255.0, CV_THRESH_BINARY);
 
         cv::imshow("imgThresh", imgThresh);
@@ -144,12 +148,17 @@ int main(){
 
         cv::Mat imgThreshCopy = imgThresh.clone();
 
+
+
+        // Contours
         std::vector<std::vector<cv::Point> > contours;
 
         cv::findContours(imgThreshCopy, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
         drawAndShowContours(imgThresh.size(), contours, "imgContours");
 
+
+        // convexHulls
         std::vector<std::vector<cv::Point> > convexHulls(contours.size());
 
         for (unsigned int i = 0; i < contours.size(); i++) {
@@ -158,6 +167,7 @@ int main(){
 
         drawAndShowContours(imgThresh.size(), convexHulls, "imgConvexHulls");
 
+        // imgCurrent Frame blobs - filter noise within the video
         for (auto &convexHull : convexHulls) {
             Blob possibleBlob(convexHull);
 
