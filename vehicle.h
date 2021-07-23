@@ -62,6 +62,7 @@ struct Info{
 class Vehicle {
     public:
         /* --------------------- Attributs -------------------------*/
+        int id;
         Mat imgLeft;
         Mat imgRight;
 
