@@ -72,12 +72,7 @@ int main(){
 
     // -----Play
     cv::VideoCapture capVideo;
-
     cv::Mat imgFrame1;
-    cv::Mat imgFrame2;
-
-
-
 
     capVideo.open("C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi");
 
@@ -93,14 +88,13 @@ int main(){
     }
 
     capVideo.read(imgFrame1);
-    capVideo.read(imgFrame2);
+    
     // --------
 
 
     // ------------------------------get mouse position on a blank Image----------------------------------------//
     #if 0
     while (capVideo.isOpened() ){
-
 
     }
     #endif
