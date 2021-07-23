@@ -9,32 +9,30 @@
 
 #include<string>
 
-using namespace cv;
-using namespace std;
 
 struct Points{
     /* ----- the points needed to calculate height----- */
     struct ph{
         // The two points in the left image
-        Point pl1, pl2;
+        cv::Point pl1, pl2;
         // The two points in the right image
-        Point pr1, pr2;
+        cv::Point pr1, pr2;
     };
 
     /* ----- the points needed to calculate width----- */
     struct pw{
         // The two points in the left image
-        Point pl1, pl2;
+        cv::Point pl1, pl2;
         // The two points in the right image
-        Point pr1, pr2;
+        cv::Point pr1, pr2;
     };
 
     /* ----- the points needed to calculate length----- */
     struct pl{
         // The two points in the left image
-        Point pl1, pl2;
+        cv::Point pl1, pl2;
         // The two points in the right image
-        Point pr1, pr2;
+        cv::Point pr1, pr2;
     };
 };
 
@@ -45,26 +43,18 @@ struct Dimension{
 };
 
 struct Info{
-    string type;
-    string make;
-    string model;
+    std::string type;
+    std::string make;
+    std::string model;
 };
-
-//void on_mouse( int e, int x, int y, int d, void *ptr )
-//{
-//    Point*p = (Point*)ptr;
-//    p->x = x;
-//    p->y = y;
-//}
-
 
 
 class Vehicle {
     public:
         /* --------------------- Attributs -------------------------*/
         int id;
-        Mat imgLeft;
-        Mat imgRight;
+        cv::Mat imgLeft;
+        cv::Mat imgRight;
 
         Points points; // 12 points (4 points for each dimension) // 24 cordonnées
 
@@ -77,7 +67,7 @@ class Vehicle {
 
         /* --------------------- Methods -------------------------*/
         Vehicle();
-        Vehicle(string pathImg1, string pathImg2);
+        Vehicle(std::string pathImg1, std::string pathImg2);
 
         // 12 points
         void TakePointsHeight();
@@ -91,7 +81,7 @@ class Vehicle {
 
 
         // by me (ta9afa 3ama)
-        void setCurrentInfo(string type, string make, string model);
+        void setCurrentInfo(std::string type, std::string make, std::string model);
 
         //
         void addVehicleToSheet();

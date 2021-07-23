@@ -132,3 +132,11 @@ void distance_deplacement(){
     cout<<"distance de déplacement:"<<dist_dep/1000<<"m"<<endl;
 }
 */
+
+//void on_mouse( int e, int x, int y, int d, void *ptr )
+//{
+//    Point*p = (Point*)ptr;
+//    p->x = x;
+//    p->y = y;
+//}
+

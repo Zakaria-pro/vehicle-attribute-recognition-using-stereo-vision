@@ -11,22 +11,22 @@
 
 #include <fstream>
 
-using namespace std;
+
 class Scenario{
     public:
         // ------ Attributes ------//
-        string id;
-        string path1;
-        string path2;
+        std::string id;
+        std::string path1;
+        std::string path2;
 
         //Vehicle vehicles[500];
 
-        ofstream ExcelFile;
+        std::ofstream ExcelFile;
 
 
         // ------ Methods ------//
 
-        Scenario(string pathVleft,string pathVright); // Constructor
+        Scenario(std::string pathVleft, std::string pathVright); // Constructor
 
         void playVideoLeft();
         void playVideoRight();

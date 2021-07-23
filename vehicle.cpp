@@ -4,13 +4,10 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
-using namespace std;
-using namespace cv;
-
 
 Vehicle::Vehicle(){}
 
-Vehicle::Vehicle(string pathImg1, string pathImg2){ // Contructor
+Vehicle::Vehicle(std::string pathImg1, std::string pathImg2){ // Contructor
     Vehicle::imgLeft = imread(pathImg1);
     Vehicle::imgRight = imread(pathImg2);
 }
@@ -43,17 +40,17 @@ void Vehicle::TakePointsLength(){ // 4 points
 
 // 3 dimension
 float Vehicle::calculateHeight(){
-    string height;
+    std::string height;
     //
     return height;
 }
 float Vehicle::calculateWidth(){
-    string width;
+    std::string width;
     //
     return width;
 }
 float Vehicle::calculateLength(){
-    string length;
+    std::string length;
     //
     return length;
 }
