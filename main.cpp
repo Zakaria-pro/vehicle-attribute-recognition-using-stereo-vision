@@ -22,6 +22,8 @@ using namespace cv;
 
 
 
+cv::Point mousePosition(0, 0);
+
 #define SHOW_STEPS            // un-comment or comment this line to show steps or not
 
 // Colors ///////////////////////////////////////////////////////////////////////////////
@@ -41,7 +43,14 @@ void drawAndShowContours(cv::Size imageSize, std::vector<Blob> blobs, std::strin
 bool checkIfBlobsCrossedTheLine(std::vector<Blob> &blobs, int &intHorizontalLinePosition, int &carCount);
 void drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &imgFrame2Copy);
 void drawCarCountOnImage(int &carCount, cv::Mat &imgFrame2Copy);
+
 double round1(double d);
+void mouseMoveCallback(int event, int x, int y, int flags, void* userData);
+void drawCross(cv::Mat &img, cv::Point center, cv::Scalar color);
+
+
+
+
 
 
 int main(){
@@ -67,11 +76,18 @@ int main(){
     * ------------------------------------------------------------------------------
     */
 
+
+
+
+
     // --------------------------- create a scenario  -------------------------//
     string pathvl = "C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi";
     string pathvr = "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi";
     Scenario scenario43(pathvl, pathvr);
     // -----------------------------------------------------------------------//
+
+
+
 
 
     // -----------------------------play video---------------------------//
@@ -155,10 +171,10 @@ int main(){
 
         cv::absdiff(imgFrame1Copy, imgFrame2Copy, imgDifference);
 
-        cv::threshold(imgDifference, imgThresh, 30, 255.0, CV_THRESH_BINARY);
+        cv::threshold(imgDifference, imgThresh, 20, 255.0, CV_THRESH_BINARY);
 
-        // cv::resize(imgThre)
-        // cv::imshow("imgThresh", imgThresh);
+//        cv::resize(imgThresh, imgThresh, Size(), 0.25, 0.25);
+//        cv::imshow("imgThresh", imgThresh);
 
         cv::Mat structuringElement3x3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3, 3));
         cv::Mat structuringElement5x5 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
@@ -166,10 +182,9 @@ int main(){
         cv::Mat structuringElement15x15 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15, 15));
 
         for (unsigned int i = 0; i < 2; i++) {
-            cv::dilate(imgThresh, imgThresh, structuringElement5x5);
-            cv::dilate(imgThresh, imgThresh, structuringElement5x5);
-            cv::erode(imgThresh, imgThresh, structuringElement5x5);
-
+            cv::dilate(imgThresh, imgThresh, structuringElement7x7);
+            cv::dilate(imgThresh, imgThresh, structuringElement7x7);
+            cv::erode(imgThresh, imgThresh, structuringElement7x7);
         }
         // -------------------------------------------------------------------//
 
@@ -179,7 +194,7 @@ int main(){
 
 
 
-        // -------------------------------- Contours ---------------------------- //
+        // ---------------------- find Contours and show them--------------------- //
         cv::Mat imgThreshCopy = imgThresh.clone();
         std::vector<std::vector<cv::Point> > contours;
 
@@ -213,8 +228,8 @@ int main(){
             if (possibleBlob.currentBoundingRect.area() > 400 &&
                 possibleBlob.dblCurrentAspectRatio > 0.2 &&
                 possibleBlob.dblCurrentAspectRatio < 4.0 &&
-                possibleBlob.currentBoundingRect.width > 30 &&
-                possibleBlob.currentBoundingRect.height > 30 &&
+                possibleBlob.currentBoundingRect.width > 220 &&
+                possibleBlob.currentBoundingRect.height > 220 &&
                 possibleBlob.dblCurrentDiagonalSize > 60.0 &&
                 (cv::contourArea(possibleBlob.currentContour) / (double)possibleBlob.currentBoundingRect.area()) > 0.50) {
 
@@ -229,7 +244,7 @@ int main(){
 
 
 
-        // ----------------------------- imgBlobs ----------------------------------------//
+        // ----------------------------- imgBlobs --------------------------------------- //
         if (blnFirstFrame == true) {
             for (auto &currentFrameBlob : currentFrameBlobs) {
                 blobs.push_back(currentFrameBlob);
@@ -238,7 +253,7 @@ int main(){
             matchCurrentFrameBlobsToExistingBlobs(blobs, currentFrameBlobs);
         }
         //drawAndShowContours(imgThresh.size(), blobs, "imgBlobs");
-        // --------------------------------------------------------------------------//
+        // -------------------------------------------------------------------------------- //
 
 
 
@@ -247,7 +262,7 @@ int main(){
 
         // ---------------------------------drawBlobInfo------------------------------//
         imgFrame2Copy = imgFrame2.clone();          // get another copy of frame 2 since we changed the previous frame 2 copy in the processing above
-        //drawBlobInfoOnImage(blobs, imgFrame2Copy);
+        drawBlobInfoOnImage(blobs, imgFrame2Copy);
         //----------------------------------------------------------------------------//
 
 
@@ -257,9 +272,8 @@ int main(){
 
 
 
-        // ---------------------------------drawCountonImage---------------------------- //
-
-        bool blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLine(blobs, intHorizontalLinePosition, carCount);
+        // --------------------drawCountonImage - crossing a line--------------------- //
+        bool blnAtLeastOneBlobCrossedTheLine = checkIfBlobsCrossedTheLine(blobs, crossingLine[0].y, carCount);
 
         if (blnAtLeastOneBlobCrossedTheLine == true) {
             cv::line(imgFrame2Copy, crossingLine[0], crossingLine[1], SCALAR_GREEN, 5);
@@ -277,10 +291,24 @@ int main(){
 
 
 
-        //cv::waitKey(0);  // uncomment this line to go frame by frame for debugging
+
+        cv::waitKey(0);  // uncomment this line to go frame by frame for debugging
 
 
 
+//        //cv::Mat imgBlank(700, 900, CV_8UC3, cv::Scalar::all(0));
+//        std::vector<cv::Point> mousePositions;
+
+//        cv::setMouseCallback("imgFrame1", mouseMoveCallback);
+
+//        while(true){
+//            mousePositions.push_back(mousePosition);        // get the current position
+//            std::cout << "current position        = " << mousePositions.back().x << ", " << mousePositions.back().y << "\n";
+//            drawCross(imgFrame1, mousePositions.back(), SCALAR_WHITE);
+//            cv::imshow("imgFrame1", imgFrame1);         // show the image
+//            cv::waitKey(10);                    // pause for a moment to get operating system to redraw the imgBlank
+//            imgFrame1 = cv::Scalar::all(0);         // blank the imgBlank for next time around
+//        }
 
 
 
@@ -475,6 +503,7 @@ void drawBlobInfoOnImage(std::vector<Blob> &blobs, cv::Mat &imgFrame2Copy) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void drawCarCountOnImage(int &carCount, cv::Mat &imgFrame2Copy) {
 
+
     int intFontFace = CV_FONT_HERSHEY_SIMPLEX;
     double dblFontScale = (imgFrame2Copy.rows * imgFrame2Copy.cols) / 300000.0;
     int intFontThickness = (int)round1((double)dblFontScale * 1.1);
@@ -489,6 +518,22 @@ void drawCarCountOnImage(int &carCount, cv::Mat &imgFrame2Copy) {
     cv::putText(imgFrame2Copy, std::to_string(carCount), ptTextBottomLeftPosition, intFontFace, dblFontScale, SCALAR_GREEN, intFontThickness);
 
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+void mouseMoveCallback(int event, int x, int y, int flags, void* userData) {
+    if (event == CV_EVENT_MOUSEMOVE) {
+        mousePosition.x = x;
+        mousePosition.y = y;
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+void drawCross(cv::Mat &img, cv::Point center, cv::Scalar color) {
+    cv::line(img, cv::Point(center.x - 5, center.y - 5), cv::Point(center.x + 5, center.y + 5), color, 2);
+    cv::line(img, cv::Point(center.x + 5, center.y - 5), cv::Point(center.x - 5, center.y + 5), color, 2);
+
+}
+
 // -------------------------------------------------------------------------------------
 
 

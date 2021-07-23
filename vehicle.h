@@ -62,12 +62,15 @@ struct Info{
 class Vehicle {
     public:
         /* --------------------- Attributs -------------------------*/
+        int id;
         Mat imgLeft;
         Mat imgRight;
+
 
         Points points; // 12 points (4 points for each dimension) // 24 cordonnées
 
         Dimension dim; // 3 dimension (width, height, length)
+
 
         Info CurrentInfo; // Made by me (hadi mercedes benz class C)
 
