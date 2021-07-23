@@ -72,12 +72,7 @@ int main(){
 
     // -----Play
     cv::VideoCapture capVideo;
-
     cv::Mat imgFrame1;
-    cv::Mat imgFrame2;
-
-
-
 
     capVideo.open("C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi");
 
@@ -93,31 +88,59 @@ int main(){
     }
 
     capVideo.read(imgFrame1);
-    capVideo.read(imgFrame2);
+
     // --------
 
 
     // ------------------------------get mouse position on a blank Image----------------------------------------//
-    #if 0
+    #if 1
     while (capVideo.isOpened() ){
+
+
+        cv::Mat imgBlank(700, 900, CV_8UC3, cv::Scalar::all(0));
+        std::vector<cv::Point> mousePositions;
+
+        cv::setMouseCallback("imgBlank", mouseMoveCallback);
+
+        while(true){
+            mousePositions.push_back(mousePosition);        // get the current position
+            std::cout << "current position        = " << mousePositions.back().x << ", " << mousePositions.back().y << "\n";
+            drawCross(imgBlank, mousePositions.back(), SCALAR_WHITE);
+            cv::imshow("imgBlank", imgBlank);         // show the image
+            cv::waitKey(10);                    // pause for a moment to get operating system to redraw the imgBlank
+            imgBlank = cv::Scalar::all(0);         // blank the imgBlank for next time around
+        }
+
+
+
+        currentFrameBlobs.clear();
+
+        imgFrame1 = imgFrame2.clone();           // move frame 1 up to where frame 2 is
+
+        if ((capVideo.get(CV_CAP_PROP_POS_FRAMES) + 1) < capVideo.get(CV_CAP_PROP_FRAME_COUNT)) {
+            capVideo.read(imgFrame2);
+        } else {
+            std::cout << "end of video\n";
+            break;
+        }
+
+        blnFirstFrame = false;
+        frameCount++;
+        chCheckForEscKey = cv::waitKey(1);
+        // --------------------------------------------------------------------------//
+
+
+    } //end while
+
+    if (chCheckForEscKey != 27) {               // if the user did not press esc (i.e. we reached the end of the video)
+        cv::waitKey(0);                         // hold the windows open to allow the "end of video" message to show
+    }
 
 
     }
     #endif
 
-    cv::Mat imgBlank(700, 900, CV_8UC3, cv::Scalar::all(0));
-    std::vector<cv::Point> mousePositions;
 
-    cv::setMouseCallback("imgBlank", mouseMoveCallback);
-
-    while(true){
-        mousePositions.push_back(mousePosition);        // get the current position
-        std::cout << "current position        = " << mousePositions.back().x << ", " << mousePositions.back().y << "\n";
-        drawCross(imgBlank, mousePositions.back(), SCALAR_WHITE);
-        cv::imshow("imgBlank", imgBlank);         // show the image
-        cv::waitKey(10);                    // pause for a moment to get operating system to redraw the imgBlank
-        imgBlank = cv::Scalar::all(0);         // blank the imgBlank for next time around
-    }
     // ---------------------------------------------------------------------------------------------------------//
 
 
