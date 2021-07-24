@@ -42,7 +42,6 @@ cv::VideoCapture g_cap;
 
 
 
-
 int main(){
 
 
@@ -247,11 +246,14 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 {
      if  ( event == cv::EVENT_LBUTTONDOWN )
      {
+
           std::cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
+          // cv::circle(frame, cv::Point(x, y), 155, SCALAR_YELLOW, cv::FILLED);
      }
      else if  ( event == cv::EVENT_RBUTTONDOWN )
      {
           std::cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
+          //Vehicle vehicle();
      }
      else if  ( event == cv::EVENT_MBUTTONDOWN )
      {
