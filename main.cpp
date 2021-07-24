@@ -57,7 +57,10 @@ int main(){
 
 
 
-    // ----------------------- Create a trackbar to play and pause video --------------------------------//
+
+
+
+    // ----------------------- Create a trackbar to play and pause video and get position --------------------------------//
 #if 1
     cv::namedWindow( "test", cv::WINDOW_AUTOSIZE );
 
@@ -88,19 +91,17 @@ int main(){
 
             cv::setTrackbarPos("Position", "test", current_pos);
 
-            //cv::setMouseCallback("test", CallBackFunc, NULL);
+            cv::setMouseCallback("test", CallBackFunc, NULL);
 
             cv::resize(frame, frame, cv::Size(), 0.35, 0.35);
             cv::imshow( "test", frame );
 
             g_run-=1;
-
         }
 
         char c = (char) cv::waitKey(10);
 
         if( c == 's' ) // single step
-
         {
 
             g_run = 1;
@@ -118,7 +119,7 @@ int main(){
 
         }
 
-        if( c == 27 )      break;
+        if( c == 27 )      break; // break if ESC is Pressed
 
     }
 #endif
