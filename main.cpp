@@ -88,6 +88,8 @@ int main(){
 
             cv::setTrackbarPos("Position", "test", current_pos);
 
+            //cv::setMouseCallback("test", CallBackFunc, NULL);
+
             cv::resize(frame, frame, cv::Size(), 0.35, 0.35);
             cv::imshow( "test", frame );
 
@@ -128,20 +130,7 @@ int main(){
 
     // ------------------Play and Pause a video when clicking on Space bar --------------------------------//
     #if 0
-    std::string pathvr = "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi";
-    cv::VideoCapture cap2(pathvr);
-    cv::Mat frame2;
 
-    if(GetAsyncKeyState(VK_SPACE) & 0x8000/*Check if high-order bit is set (1 << 15)*/)
-    {
-        while(true){
-            cap2.read(frame2);
-            cv::resize(frame2, frame2, cv::Size(), 0.35, 0.35);
-            cv::imshow("Video Right", frame2);
-            cv::waitKey(70);
-
-        }
-    }
     #endif
     // ---------------------------------------------------------------------------------------------------------//
 
