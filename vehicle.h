@@ -66,8 +66,8 @@ class Vehicle {
 
 
         /* --------------------- Methods -------------------------*/
-        Vehicle();
-        Vehicle(std::string pathImg1, std::string pathImg2);
+        //Vehicle();
+        //Vehicle(std::string pathImg1, std::string pathImg2);
 
         // 12 points
         void TakePointsHeight();
