@@ -285,7 +285,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
     if  ( event == cv::EVENT_LBUTTONDOWN )
     {
 
-/*
+
         switch(leftClicksNumber) {
         case 1:
             vehicles[idVeh].points.ph.pl1 = x;
@@ -325,11 +325,12 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
             vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
             break;
 
-
         default:
+        
             // code block
+            
         }
-*/
+
 
         std::cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
 

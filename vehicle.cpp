@@ -5,12 +5,9 @@
 #include <opencv2/imgproc.hpp>
 
 
-Vehicle::Vehicle(){}
+//Vehicle::Vehicle(){
+//}
 
-Vehicle::Vehicle(std::string pathImg1, std::string pathImg2){ // Contructor
-    Vehicle::imgLeft = imread(pathImg1);
-    Vehicle::imgRight = imread(pathImg2);
-}
 
 // 12 points
 void Vehicle::TakePointsHeight(){ // 4 points
