@@ -285,56 +285,57 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
     if  ( event == cv::EVENT_LBUTTONDOWN )
     {
 
-/*
-        switch(leftClicksNumber) {
-        case 1:
-            vehicles[idVeh].points.ph.pl1 = x;
-            vehicles[idVeh].points.ph.pl1.y = y;
-            break;
-        case 2:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 3:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 4:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 5:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 6:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 7:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 8:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 9:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 10:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 9:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-        case 10:
-            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-            break;
-
-
-        default:
-            // code block
-        }
-*/
-
         std::cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
 
         leftClicksNumber += 1;
         std::cout << "number of left clicks : " << leftClicksNumber << std::endl;
+
+//        switch(leftClicksNumber) {
+//        case 1:
+//            vehicles[idVeh].points.ph.pl1 = x;
+//            vehicles[idVeh].points.ph.pl1.y = y;
+//            break;
+//        case 2:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 3:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 4:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 5:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 6:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 7:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 8:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 9:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 10:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 9:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+//        case 10:
+//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
+//            break;
+
+//        default:
+
+//            // code block
+
+//        }
+
+
         //std::cout << "points for calculating height : ";
         //cv::setMouseCallback("test", CallBackFunc, 0);
 
