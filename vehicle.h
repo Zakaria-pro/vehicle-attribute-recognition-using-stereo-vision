@@ -12,73 +12,91 @@
 
 struct Points{
     /* ----- the points needed to calculate height----- */
-    struct ph{
-        // The two points in the left image
-        cv::Point pl1, pl2;
-        // The two points in the right image
-        cv::Point pr1, pr2;
-    };
+
+    // The two points in the left image
+    cv::Point phl1, phl2;
+    // The two points in the right image
+    cv::Point phr1, phr2;
+
 
     /* ----- the points needed to calculate width----- */
-    struct pw{
-        // The two points in the left image
-        cv::Point pl1, pl2;
-        // The two points in the right image
-        cv::Point pr1, pr2;
-    };
+
+    // The two points in the left image
+    cv::Point pwl1, pwl2;
+    // The two points in the right image
+    cv::Point pwr1, pwr2;
+
 
     /* ----- the points needed to calculate length----- */
-    struct pl{
-        // The two points in the left image
-        cv::Point pl1, pl2;
-        // The two points in the right image
-        cv::Point pr1, pr2;
-    };
+
+    // The two points in the left image
+    cv::Point pll1, pll2;
+    // The two points in the right image
+    cv::Point plr1, plr2;
+
 };
 
 struct Dimension{
-    float height;
-    float width;
-    float length;
+    double height;
+    double width;
+    double length;
 };
 
-struct Info{
+struct Ratios{
+    double ratioHeightAndDistancebetweenwheels;    // Le ratio de la hauteur et la distance entre les roues .
+    double ratioHeightAndLegth;                    // Le ratio de la hauteur  et la longueur.
+    double ratioDistancebetweenwheelsAndLegth;     // Le ratio de la distance entre les roues et la longueur .
+    double ratioDistancebetweenheadlightsAndWidth; // Le ratio de la distance entre les phares  et la largeur du véhicule.
+
+};
+
+struct Features{
+    struct Dimension dimensions;            // Hauteur, Largeur, et longueur.
+    double distanceBetweenWheels;           // La distance entre les roues
+    double distanceBetweenHeadlights;       // La distance entre les phares
+    struct Ratios ratios;                   // Calcul des ratios
+    double maxHeightOfWindows;              // La hauteur maximum des fenêtres.
+    double wheelDiameter;                   // Diamètres des roues.
+    double distanceBetweenWindowAndGround;  // La distance entre le bas de la fenêtre et le sol.
+};
+
+struct CurrentInfo{
     std::string type;
     std::string make;
     std::string model;
 };
 
 
+
 class Vehicle {
     public:
         /* --------------------- Attributs -------------------------*/
         int id;
-        cv::Mat imgLeft;
-        cv::Mat imgRight;
 
-        Points points; // 12 points (4 points for each dimension) // 24 cordonnées
+        struct Points points;
 
-        Dimension dim; // 3 dimension (width, height, length)
+        struct Features features;
 
-        Info CurrentInfo; // Made by me (hadi mercedes benz class C)
+        struct CurrentInfo info; // Made by me (hadi mercedes benz class C)
 
-        Info predictedInfo; // Made by the machine (tal model 9al 3la anaha mercedes benz class C )
+        struct CurrentInfo predictedInfo; // Made by the machine (tal model 9al 3la anaha mercedes benz class C )
 
 
         /* --------------------- Methods -------------------------*/
-        //Vehicle();
-        //Vehicle(std::string pathImg1, std::string pathImg2);
 
-        // 12 points
-        void TakePointsHeight();
-        void TakePointsWidth();
-        void TakePointsLength();
+        void calculateDimensions();
+        void Vehicle::calculateDistanceBetweenWheels();
+        void Vehicle::calculateDistanceBetweenHeadlights();
 
-        // 3 dimension
-        float calculateHeight();
-        float calculateWidth();
-        float calculateLength();
+        void Vehicle::calculateRatios();
 
+        void Vehicle::calculateMaxWindowHeight();
+        void::Vehicle::calculateDistanceBetweenHandles();
+        void::Vehicle::calculateWheelsDiameter();
+        void::Vehicle::calculateDistanceBetweenWindowAndGround();
+
+
+        void showInfo();
 
         // by me (ta9afa 3ama)
         void setCurrentInfo(std::string type, std::string make, std::string model);

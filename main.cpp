@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "scenario.h"
 #include "vehicle.h"
-//#include "vehicle.cpp"
+#include "vehicle.cpp"
 
 #include <QApplication>
 
@@ -27,15 +27,13 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 
 
 
-//cv::Point mousePosition(0, 0);
-
 int g_run = 1;
 
 cv::VideoCapture g_cap;
 cv::VideoCapture g_capR;
 
 Vehicle vehicles[500];
-int idVeh=0;
+int idVeh=1;
 
 int leftClicksNumber = 0;
 int rightClicksNumber = 0;
@@ -46,8 +44,6 @@ int main(){
 
 
     // ----------------------- Create a trackbar to play and pause video and get position --------------------------------//
-#if 1
-
 
     // Video Left
     cv::namedWindow( "video left", cv::WINDOW_AUTOSIZE );
@@ -69,11 +65,9 @@ int main(){
     std::cout << "Video has " << frames << " frames of dimensions("       << tmpw << ", " << tmph << ")." << std::endl;
 
 
-
     // routine, async execution
     cv::setMouseCallback("video left", CallBackFunc, 0);
     cv::setMouseCallback("video right", CallBackFunc, 0);
-
 
 
     for(;;) {
@@ -95,6 +89,7 @@ int main(){
             cv::imshow( "video left", frameL );
             cv::imshow("video right", frameR);
 
+            std::cout << "---- ENTER Points for calculating HEIGHT :" << std::endl;
             g_run-=1;
 
         }
@@ -124,10 +119,8 @@ int main(){
         if( c == 27 )      break; // break if ESC is Pressed
 
     }
-#endif
+
     // --------------------------------------------------------------------------------------------------//
-
-
 
 
 
@@ -211,61 +204,8 @@ int main(){
 
     // ---------------------------------------------------------------------------------------------------------//
 
-
-
-
-
-
-
-
-    // ------------------------------get mouse position on a blank Image----------------------------------------//
-    #if 0
-    //    cv::Mat img = cv::imread("C:/Resources/Test4.jpg");
-    //    cv::resize(img, img, cv::Size(), 0.5, 0.5);
-
-    //if fail to read the image
-    if ( img.empty() )
-    {
-        std::cout << "Error loading the image" << std::endl;
-        return -1;
-    }
-
-    cv::Mat imgBlank(700, 900, CV_8UC3, cv::Scalar::all(0));
-
-    Create a window
-    cv::namedWindow("My Window", 1);
-
-    cv::setMouseCallback("My Window", CallBackFunc, NULL);
-
-    cv::imshow("My Window", imgFrame1);
-
-    cv::waitKey(0);
-
-    #endif
-    // ---------------------------------------------------------------------------------------------------------//
-
-
-
-
-
-
-
-    // ------------------------------  ---------------------------------//
-    #if 0
-
-    #endif
-    // ---------------------------------------------------------------------------------------------------------//
-
-
-
     return 0;
 }
-
-
-
-
-
-
 
 
 
@@ -285,55 +225,72 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
     if  ( event == cv::EVENT_LBUTTONDOWN )
     {
 
-        std::cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
+
 
         leftClicksNumber += 1;
         std::cout << "number of left clicks : " << leftClicksNumber << std::endl;
 
-//        switch(leftClicksNumber) {
-//        case 1:
-//            vehicles[idVeh].points.ph.pl1 = x;
-//            vehicles[idVeh].points.ph.pl1.y = y;
-//            break;
-//        case 2:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 3:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 4:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 5:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 6:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 7:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 8:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 9:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 10:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 9:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
-//        case 10:
-//            vehicles[idVeh].points.ph.pl1 = cv::Point(x, y);
-//            break;
+        std::cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
 
-//        default:
 
-//            // code block
+        vehicles[idVeh].id = idVeh;
 
-//        }
+        switch(leftClicksNumber) {
+        case 1:
+            vehicles[idVeh].points.phl1 = cv::Point(x, y);
+            break;
+        case 2:
+            vehicles[idVeh].points.phl2 = cv::Point(x, y);
+            break;
+        case 3:
+            vehicles[idVeh].points.phr1 = cv::Point(x, y);
+            break;
+        case 4:
+            vehicles[idVeh].points.phr2 = cv::Point(x, y);
+            std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
+            break;
+        case 5:
+            vehicles[idVeh].points.pwl1 = cv::Point(x, y);
+            break;
+        case 6:
+            vehicles[idVeh].points.pwl2 = cv::Point(x, y);
+            break;
+        case 7:
+            vehicles[idVeh].points.pwr1 = cv::Point(x, y);
+            break;
+        case 8:
+            vehicles[idVeh].points.pwr2 = cv::Point(x, y);
+            std::cout << "---- ENTER Points for calculating LENGTH :" << std::endl;
+            break;
+        case 9:
+            vehicles[idVeh].points.pll1 = cv::Point(x, y);
+            break;
+        case 10:
+            vehicles[idVeh].points.pll2 = cv::Point(x, y);
+            break;
+        case 11:
+            vehicles[idVeh].points.plr1 = cv::Point(x, y);
+            break;
+        case 12:
+            vehicles[idVeh].points.plr2 = cv::Point(x, y);
+            vehicles[idVeh].calculateDimensions();
+            std::cout << "---- ENTER Points for calculating The Distance Between Wheels :" << std::endl;
+            break;
+
+
+
+        default:
+
+            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+            vehicles[idVeh].showInfo();
+
+            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+
+            // code block
+
+        }
 
 
         //std::cout << "points for calculating height : ";
@@ -347,14 +304,21 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 
     else if  ( event == cv::EVENT_RBUTTONDOWN )
     {
+        std::cout << "Writing Vehicle Attributes to Excel sheet ..." << std::endl;
+        vehicles[idVeh].addVehicleToSheet();
+
         std::cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << std::endl;
         rightClicksNumber += 1;
         std::cout << "number of right clicks : " << rightClicksNumber << std::endl;
-        //enter make and model in excel
-        //std::cin >> vehicles[idVeh].CurrentInfo.make;
-        //cv::namedWindow("getInfo", 1);
 
-    }
+        // Moving to another vehicle
+        std::cout << "Moving to another vehicle ..." << std::endl;
+
+        idVeh += 1;
+        leftClicksNumber = 0;
+
+
+     }
 
 
 
