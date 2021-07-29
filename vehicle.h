@@ -84,7 +84,12 @@ class Vehicle {
 
         /* --------------------- Methods -------------------------*/
 
-        void calculateDimensions();
+        void calculateHeight();
+        void calculateWidth();
+        void calculateLegth();
+
+
+
         void Vehicle::calculateDistanceBetweenWheels();
         void Vehicle::calculateDistanceBetweenHeadlights();
 

@@ -62,3 +62,6 @@ LIBS        += -L"C:/Qt/Opencv3/vs11/lib/"  -lopencv_calib3d343 \
                                             -lopencv_videostab343
 
 }
+
+DISTFILES += \
+    Vehicles.csv
