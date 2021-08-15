@@ -6,52 +6,66 @@
 #include <fstream>
 
 
-
-
 float f=1060,b=119.91;
 
 // ---------------------------------- 3 dimension --------------------------------//
 void Vehicle::calculateHeight(){
-//    double z1,z2,
-//            x1,x2,
-//            y1,y2,
-//            dp1,dp2,
-//            dist_dep,height;
+#if 0
+    double z1,z2,
+            x1,x2,
+            y1,y2,
+            dp1,dp2,
+            dist_dep,height;
 
 
-//    dp1=abs(points.phl1.x-points.phr1.x);
-//    // calculate height :
-//    z1=(f*b)/(dp1);
-//    x1=((points.phr1.x)*z1)/f;
-//    y1=((points.phr1.y)*z1)/f;
+    dp1=abs(points.phl1.x-points.phr1.x);
+    // calculate height :
+    z1=(f*b)/(dp1);
+    x1=((points.phr1.x)*z1)/f;
+    y1=((points.phr1.y)*z1)/f;
 
 
-//    dp2=abs(points.phl2.x-points.phr2.x);
-////    cout<<"disparité 2 est:"<<dp2<<endl;
+    dp2=abs(points.phl2.x-points.phr2.x);
+//    cout<<"disparité 2 est:"<<dp2<<endl;
 
-//    z2=(f*b)/(dp2);
-//    x2=(points.phr2.x*z2)/f;
-//    y2=(points.phr2.y*z2)/f;
+    z2=(f*b)/(dp2);
+    x2=(points.phr2.x*z2)/f;
+    y2=(points.phr2.y*z2)/f;
 
 
 
-//    dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
-//    //std::cout<<"Height: "<< height <<"m"<<std::endl;
-//    height = dist_dep/1000;
+    dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
+    //std::cout<<"Height: "<< height <<"m"<<std::endl;
+    height = dist_dep/1000;
 
-//    features.dimensions.height = height;
+    features.dimensions.height = height;
+#endif
 
+#if 1
+    double x1 = points.phl1.x;
+    double x2 = points.phl2.x;
+    double y1 = points.phl1.y;
+    double y2 = points.phl2.y;
+
+    //double dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2));
+
+    double dist_dep = cv::norm(points.phl1 - points.phl2);
+    //std::cout<<"Height: "<< height <<"m"<<std::endl;
+    //double height = dist_dep/1000;
+
+    features.dimensions.height = dist_dep;
+#endif
 }
 
 
 void Vehicle::calculateWidth(){
+#if 1
     // The Width is the depth
     double z1,z2,
             x1,x2,
             y1,y2,
             dp1,dp2,
             dist_dep,width;
-
 
     dp1=abs(points.pwl1.x-points.pwr1.x);
     // calculate height :
@@ -64,8 +78,8 @@ void Vehicle::calculateWidth(){
 //    cout<<"disparité 2 est:"<<dp2<<endl;
 
     z2=(f*b)/(dp2);
-    x2=(points.pwr2.x*z2)/f;
-    y2=(points.pwr2.y*z2)/f;
+    x2=(points.pwl2.x*z2)/f;
+    y2=(points.pwl2.y*z2)/f;
 
 
 
@@ -74,40 +88,54 @@ void Vehicle::calculateWidth(){
     width = dist_dep/1000;
 
     features.dimensions.width = width;
-
+#endif
 }
 
 
-void Vehicle::calculateLegth(){
-//    double z1,z2,
-//            x1,x2,
-//            y1,y2,
-//            dp1,dp2,
-//            dist_dep,length;
+void Vehicle::calculateLength(){
+#if 1
+    double z1,z2,
+            x1,x2,
+            y1,y2,
+            dp1,dp2,
+            dist_dep,length;
 
 
-//    dp1=abs(points.pll1.x-points.plr1.x);
-//    // calculate height :
-//    z1=(f*b)/(dp1);
-//    x1=((points.plr1.x)*z1)/f;
-//    y1=((points.plr1.y)*z1)/f;
+    dp1=abs(points.pll1.x-points.plr1.x);
+    // calculate height :
+    z1=(f*b)/(dp1);
+    x1=((points.plr1.x)*z1)/f;
+    y1=((points.plr1.y)*z1)/f;
 
 
-//    dp2=abs(points.pll2.x-points.plr2.x);
-////    cout<<"disparité 2 est:"<<dp2<<endl;
+    dp2=abs(points.pll2.x-points.plr2.x);
+//    cout<<"disparité 2 est:"<<dp2<<endl;
 
-//    z2=(f*b)/(dp2);
-//    x2=(points.plr2.x*z2)/f;
-//    y2=(points.plr2.y*z2)/f;
+    z2=(f*b)/(dp2);
+    x2=(points.plr2.x*z2)/f;
+    y2=(points.plr2.y*z2)/f;
 
 
 
-//    dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
-//    //std::cout<<"Height: "<< height <<"m"<<std::endl;
-//    length = dist_dep/1000;
+    dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
+    //std::cout<<"Height: "<< height <<"m"<<std::endl;
+    length = dist_dep/1000;
 
-//    features.dimensions.length = length;
+    features.dimensions.length = length;
+#endif
 
+#if 0
+    double x1 = points.pll1.x;
+    double x2 = points.pll2.x;
+    double y1 = points.pll1.y;
+    double y2 = points.pll2.y;
+
+    double dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2));
+    //std::cout<<"Height: "<< height <<"m"<<std::endl;
+    double length = dist_dep/1000;
+
+    features.dimensions.length = length;
+#endif
 }
 
 // ------------------------------------------------------------------------------//

@@ -380,10 +380,10 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
             vehicles[idVeh].points.phl1 = cv::Point(x, y);
             break;
         case 2:
-            vehicles[idVeh].points.phr1 = cv::Point(x, y);
+            vehicles[idVeh].points.phl2 = cv::Point(x, y);
             break;
         case 3:
-            vehicles[idVeh].points.phl2 = cv::Point(x, y);
+            vehicles[idVeh].points.phr1 = cv::Point(x, y);
             break;
         case 4:
             vehicles[idVeh].points.phr2 = cv::Point(x, y);
@@ -423,7 +423,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
         case 12:
             vehicles[idVeh].points.plr2 = cv::Point(x, y);
 
-            vehicles[idVeh].calculateLegth();
+            vehicles[idVeh].calculateLength();
 
             std::cout<<"Length: "<< vehicles[idVeh].features.dimensions.length <<"m"<<std::endl;
 
