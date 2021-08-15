@@ -86,7 +86,7 @@ class Vehicle {
 
         void calculateHeight();
         void calculateWidth();
-        void calculateLegth();
+        void calculateLength();
 
 
 
