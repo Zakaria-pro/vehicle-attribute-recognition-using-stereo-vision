@@ -13,16 +13,23 @@ float f=1060,b=119.91;
 
 void Vehicle::depth(){
     float dp1=abs(points.phl1.x-points.phr1.x);
-    float zDepth = f*b/dp1;
-    std::cout << "the distance between the point and the camera is : " << std::abs(zDepth);
+    float zDepth1 = f*b/dp1;
+
+    std::cout << "the distance between the point 1 and the camera is : " << 32 - zDepth1/1000 << "m\n";
+
+
+//    float dp2=abs(points.phl2.x-points.phr2.x);
+//    float zDepth2 = f*b/dp2;
+//    std::cout << "the distance between the point 2 and the camera is : " << std::abs(zDepth2)/1000 << "m\n";
+
+
+//    std::cout << dp1;
+//    std::cout << dp2;
 }
 
+//31.7761m
+//42.3682m
 void Vehicle::disparity(){
-//    csvFile.open("C:/Users/hp/OneDrive/Bureau/click_px/data.csv", std::ofstream::out | std::ofstream::app);
-
-//    if(csvFile.is_open()){
-//        std::cout << "File opened successfuly" <<std::endl;
-//    }
 
     double z1,z2,
             x1,x2,

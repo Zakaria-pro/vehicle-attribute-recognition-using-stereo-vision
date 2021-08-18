@@ -33,12 +33,18 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 
 std::fstream mycsvFile; // output File
 
-cv::Mat frameL;
+
+
 
 int g_run = 1;
 
+// left video
 cv::VideoCapture g_cap;
+cv::Mat frameL;
+
+// right video
 cv::VideoCapture g_capR;
+cv::Mat frameR;
 
 Vehicle vehicles[500];
 int idVeh=1;
@@ -66,10 +72,10 @@ int main(){
     // Video Right
     cv::namedWindow( "video right", cv::WINDOW_AUTOSIZE );
     g_capR.open( "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi" );
-    cv::Mat frameR;
 
 
-    // info on video
+
+    // info about the videos
     int frames = (int) g_cap.get(cv::CAP_PROP_FRAME_COUNT);
     int tmpw   = (int) g_cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int tmph   = (int) g_cap.get(cv::CAP_PROP_FRAME_HEIGHT);
@@ -135,89 +141,6 @@ int main(){
 
     }
 
-    // --------------------------------------------------------------------------------------------------//
-
-
-
-    // ------------------Play and Pause a video when clicking on Space bar --------------------------------//
-
-    /*
-    cv::namedWindow( "video right", cv::WINDOW_AUTOSIZE );
-
-    g_cap.open( "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi" );
-
-    int frames = (int) g_cap.get(cv::CAP_PROP_FRAME_COUNT);
-    int tmpw   = (int) g_cap.get(cv::CAP_PROP_FRAME_WIDTH);
-    int tmph   = (int) g_cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-    std::cout << "Video has " << frames << " frames of dimensions("       << tmpw << ", " << tmph << ")." << std::endl;
-
-    cv::createTrackbar("Position", "video right", &g_slider_position, frames, onTrackbarSlide);
-
-    cv::Mat frame;
-
-
-
-
-    // routine, async execution
-    //cv::setMouseCallback("test", CallBackFunc, 0);
-
-    // routine, async execution
-    //int current_pos = (int)g_cap.get(cv::CAP_PROP_POS_FRAMES);
-    //cv::setTrackbarPos("Position", "test", current_pos);
-
-
-    for(;;) {
-
-        // g_run = 1 --> g_run = g_run - 1 --> g_run = 0 --> so makiwalich yadkhal l had l if
-        if( g_run != 0 ) {
-
-
-            g_cap >> frame;
-
-
-            if(frame.empty())
-                //std::cout << "EOF" << std::endl;
-                break;
-
-            g_dontset = 1;
-
-            cv::resize(frame, frame, cv::Size(), 0.35, 0.35);
-            cv::imshow( "test", frame );
-
-            std::cout << "up" << std::endl;
-
-            g_run-=1;
-            std::cout << "g_run = " << g_run << std::endl;
-        }
-        //std::cout << "im here" << std::endl;
-
-
-        char c = (char) cv::waitKey(10);
-
-        if( c == 's' ) // single step
-        {
-
-            g_run = 1;
-
-            std::cout << "Single step, run = " << g_run << std::endl;
-
-        }
-
-        if( c == 'r' ) // run mode
-        {
-
-            g_run = -1;
-
-            std::cout << "Run mode, run = " << g_run <<std::endl;
-
-        }
-
-        if( c == 27 )      break; // break if ESC is Pressed
-
-    }
-    */
-
-    // ---------------------------------------------------------------------------------------------------------//
 
     mycsvFile.close();
     return 0;
@@ -254,76 +177,93 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
         switch(leftClicksNumber) {
         case 1:
             vehicles[idVeh].points.phl1 = cv::Point(x, y);
-            cv::circle(frameL, vehicles[idVeh].points.phl1, 10, SCALAR_RED);
+            cv::circle(frameL, vehicles[idVeh].points.phl1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+
+//            vehicles[idVeh].points.phr1 = cv::Point(vehicles[idVeh].points.phl1.x-13, vehicles[idVeh].points.phl1.y-3);
+//            cv::circle(frameR, vehicles[idVeh].points.phr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+//            cv::imshow( "video right", frameR );
+
             break;
+
+
         case 2:
             vehicles[idVeh].points.phr1 = cv::Point(x, y);
-
-            vehicles[idVeh].depth(); // calcute the distance between the point and the camera
+            cv::circle(frameR, vehicles[idVeh].points.phr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            vehicles[idVeh].depth();
 
             break;
-        case 3:
-            vehicles[idVeh].points.phl2 = cv::Point(x, y);
-            break;
-        case 4:
-            vehicles[idVeh].points.phr2 = cv::Point(x, y);
 
-            vehicles[idVeh].disparity();
 
+
+//        case 3:
+//            vehicles[idVeh].points.phl2 = cv::Point(x, y);
+//            cv::circle(frameL, vehicles[idVeh].points.phl2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+//            cv::imshow( "video left", frameL );
+
+//            vehicles[idVeh].points.phr2 = cv::Point(vehicles[idVeh].points.phl2.x-13, vehicles[idVeh].points.phl2.y-3);
+//            cv::circle(frameR, vehicles[idVeh].points.phr2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+//            cv::imshow( "video right", frameR );
+
+//            vehicles[idVeh].depth();
+            //vehicles[idVeh].disparity();
+
+
+            //vehicles[idVeh].depth();
             //vehicles[idVeh].calculateHeight();
-
             //std::cout<<"Height: "<< vehicles[idVeh].features.dimensions.height <<"m"<<std::endl;
 
-            std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
-            break;
-        case 5:
-            vehicles[idVeh].points.pwl1 = cv::Point(x, y);
-            break;
-        case 6:
-            vehicles[idVeh].points.pwl2 = cv::Point(x, y);
-            break;
-        case 7:
-            vehicles[idVeh].points.pwr1 = cv::Point(x, y);
-            break;
-        case 8:
-            vehicles[idVeh].points.pwr2 = cv::Point(x, y);
+//            std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
+//            break;
+//        case 5:
+//            vehicles[idVeh].points.pwl1 = cv::Point(x, y);
+//            break;
+//        case 6:
+//            vehicles[idVeh].points.pwl2 = cv::Point(x, y);
+//            break;
+//        case 7:
+//            vehicles[idVeh].points.pwr1 = cv::Point(x, y);
+//            break;
+//        case 8:
+//            vehicles[idVeh].points.pwr2 = cv::Point(x, y);
 
-            vehicles[idVeh].calculateWidth();
+//            vehicles[idVeh].calculateWidth();
 
-            std::cout<<"Width: "<< vehicles[idVeh].features.dimensions.width <<"m"<<std::endl;
-            std::cout << "---- ENTER Points for calculating LENGTH :" << std::endl;
-            break;
-        case 9:
-            vehicles[idVeh].points.pll1 = cv::Point(x, y);
-            break;
-        case 10:
-            vehicles[idVeh].points.pll2 = cv::Point(x, y);
-            break;
-        case 11:
-            vehicles[idVeh].points.plr1 = cv::Point(x, y);
-            break;
-        case 12:
-            vehicles[idVeh].points.plr2 = cv::Point(x, y);
+//            std::cout<<"Width: "<< vehicles[idVeh].features.dimensions.width <<"m"<<std::endl;
+//            std::cout << "---- ENTER Points for calculating LENGTH :" << std::endl;
+//            break;
+//        case 9:
+//            vehicles[idVeh].points.pll1 = cv::Point(x, y);
+//            break;
+//        case 10:
+//            vehicles[idVeh].points.pll2 = cv::Point(x, y);
+//            break;
+//        case 11:
+//            vehicles[idVeh].points.plr1 = cv::Point(x, y);
+//            break;
+//        case 12:
+//            vehicles[idVeh].points.plr2 = cv::Point(x, y);
 
-            vehicles[idVeh].calculateLength();
+//            vehicles[idVeh].calculateLength();
 
-            std::cout<<"Length: "<< vehicles[idVeh].features.dimensions.length <<"m"<<std::endl;
+//            std::cout<<"Length: "<< vehicles[idVeh].features.dimensions.length <<"m"<<std::endl;
 
-            std::cout << "---- ENTER Points for calculating The Distance Between Wheels :" << std::endl;
-            break;
-
-
-
-        default:
-
-            std::cout << "--------------------------------------------------------------------------------" << std::endl;
-
-            vehicles[idVeh].showInfo();
-
-            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+//            std::cout << "---- ENTER Points for calculating The Distance Between Wheels :" << std::endl;
+//            break;
 
 
-            // code block
+
+//        default:
+
+//            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+//            vehicles[idVeh].showInfo();
+
+//            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+
+//            // code block
 
         }
       }

@@ -262,3 +262,85 @@ int main(int argc, char** argv)
 }
 
 #endif
+
+
+
+
+
+// ------------------Play and Pause a video when clicking on Space bar --------------------------------//
+
+/*
+cv::namedWindow( "video right", cv::WINDOW_AUTOSIZE );
+
+g_cap.open( "C:/Users/hp/OneDrive/Bureau/Scenario43/2.avi" );
+
+int frames = (int) g_cap.get(cv::CAP_PROP_FRAME_COUNT);
+int tmpw   = (int) g_cap.get(cv::CAP_PROP_FRAME_WIDTH);
+int tmph   = (int) g_cap.get(cv::CAP_PROP_FRAME_HEIGHT);
+std::cout << "Video has " << frames << " frames of dimensions("       << tmpw << ", " << tmph << ")." << std::endl;
+
+cv::createTrackbar("Position", "video right", &g_slider_position, frames, onTrackbarSlide);
+
+cv::Mat frame;
+
+
+
+
+// routine, async execution
+//cv::setMouseCallback("test", CallBackFunc, 0);
+
+// routine, async execution
+//int current_pos = (int)g_cap.get(cv::CAP_PROP_POS_FRAMES);
+//cv::setTrackbarPos("Position", "test", current_pos);
+
+
+for(;;) {
+
+    // g_run = 1 --> g_run = g_run - 1 --> g_run = 0 --> so makiwalich yadkhal l had l if
+    if( g_run != 0 ) {
+
+
+        g_cap >> frame;
+
+
+        if(frame.empty())
+            //std::cout << "EOF" << std::endl;
+            break;
+
+        g_dontset = 1;
+
+        cv::resize(frame, frame, cv::Size(), 0.35, 0.35);
+        cv::imshow( "test", frame );
+
+        std::cout << "up" << std::endl;
+
+        g_run-=1;
+        std::cout << "g_run = " << g_run << std::endl;
+    }
+    //std::cout << "im here" << std::endl;
+
+
+    char c = (char) cv::waitKey(10);
+
+    if( c == 's' ) // single step
+    {
+
+        g_run = 1;
+
+        std::cout << "Single step, run = " << g_run << std::endl;
+
+    }
+
+    if( c == 'r' ) // run mode
+    {
+
+        g_run = -1;
+
+        std::cout << "Run mode, run = " << g_run <<std::endl;
+
+    }
+
+    if( c == 27 )      break; // break if ESC is Pressed
+
+}
+*/
