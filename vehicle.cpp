@@ -5,10 +5,69 @@
 #include <opencv2/imgproc.hpp>
 #include <fstream>
 
+std::fstream csvFile;
 
 float f=1060,b=119.91;
 
 // ---------------------------------- 3 dimension --------------------------------//
+
+void Vehicle::depth(){
+    float dp1=abs(points.phl1.x-points.phr1.x);
+    float zDepth = f*b/dp1;
+    std::cout << "the distance between the point and the camera is : " << std::abs(zDepth);
+}
+
+void Vehicle::disparity(){
+//    csvFile.open("C:/Users/hp/OneDrive/Bureau/click_px/data.csv", std::ofstream::out | std::ofstream::app);
+
+//    if(csvFile.is_open()){
+//        std::cout << "File opened successfuly" <<std::endl;
+//    }
+
+    double z1,z2,
+            x1,x2,
+            y1,y2,
+            dp1,dp2, dist;
+
+    dp1=abs(points.phl1.x-points.phr1.x);
+    // calculate height :
+    z1=(f*b)/(dp1);
+    x1=((points.phl1.x)*z1)/f;
+    y1=((points.phl1.y)*z1)/f;
+
+
+    dp2=abs(points.phl2.x-points.phr2.x);
+    // calculate height :
+    z2=(f*b)/(dp2);
+    x2=((points.phl2.x)*z2)/f;
+    y2=((points.phl2.y)*z2)/f;
+
+    std::cout << "x1 = " << x1 << " y1 = " << y1 << " z1 = " << z1 << std::endl;
+    std::cout << "x2 = " << x2 << " y2 = " << y2 << " z2 = " << z2 << std::endl;
+
+    dist = sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
+
+    std::cout << "disparity of the point 1 : " << dp1 << std::endl;
+    std::cout << "disparity of the point 2 : " << dp2 << std::endl;
+
+    std::cout << "depth of the point 1 : " << 1/dp1 << std::endl;
+    std::cout << "depth of the point 2 : " << 1/dp2 << std::endl;
+
+    std::cout << "distance virtuelle entre les deux points : " << dist << std::endl;
+
+
+//    csvFile << x1 << ","
+//              << y1 << ","
+//              << z1 << "\n";
+
+
+    //dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
+    //std::cout<<"Height: "<< height <<"m"<<std::endl;
+    //height = dist_dep/1000;
+
+    //features.dimensions.height = height;
+}
+
 void Vehicle::calculateHeight(){
 #if 0
     double z1,z2,
@@ -70,8 +129,8 @@ void Vehicle::calculateWidth(){
     dp1=abs(points.pwl1.x-points.pwr1.x);
     // calculate height :
     z1=(f*b)/(dp1);
-    x1=((points.pwr1.x)*z1)/f;
-    y1=((points.pwr1.y)*z1)/f;
+    x1=((points.pwl1.x)*z1)/f;
+    y1=((points.pwl1.y)*z1)/f;
 
 
     dp2=abs(points.pwl2.x-points.pwr2.x);

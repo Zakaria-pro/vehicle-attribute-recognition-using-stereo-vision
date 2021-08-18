@@ -11,131 +11,6 @@
 #include <conio.h>
 
 
-#if 0
-using namespace std;
-using namespace cv;
-
-void on_mouse( int e, int x, int y, int d, void *ptr )
-{
-    Point*p = (Point*)ptr;
-    p->x = x;
-    p->y = y;
-}
-
-int main(int argc, char** argv)
-{
-    float xl,yl,xr,yr,xl1,yl1,xr1,yr1;
-    // Read image from file
-
-    //
-    Mat left  = imread("/home/hamza/wheel_spd/S2/Left/5m.png",IMREAD_COLOR);
-    Mat right = imread("/home/hamza/wheel_spd/S2/Right/5m.png",IMREAD_COLOR);
-
-    Mat left1  = imread("/home/hamza/wheel_spd/S2/Left/30m.png",IMREAD_COLOR);
-    Mat right1 = imread("/home/hamza/wheel_spd/S2/Right/30m.png",IMREAD_COLOR);
-
-
-    //Create a window
-    namedWindow("My Window", 1);
-
-    //set the callback function for any mouse event
-    Point p;
-    setMouseCallback("My Window", on_mouse, &p );
-    //show the image
-    imshow("My Window", left);
-
-    // Wait until user press some key
-
-
-    waitKey(0);
-    xl=p.x;
-    yl=p.y;
-//    cout<<"xl is "<<xl<<endl;
-//    cout<<"yl is "<<yl<<endl;
-
-
-
-
-    //Create a window
-    namedWindow("My Window", 1);
-    //set the callback function for any mouse event
-    setMouseCallback("My Window", on_mouse, &p );
-    //show the image
-    imshow("My Window", right);
-    // Wait until user press some key
-    waitKey(0);
-
-    xr=p.x;
-    yr=p.y;
-//    cout<<"xr is "<<xr<<endl;
-//    cout<<"yr is "<<yr<<endl;
-
-
-
-
-
-    //Create a window
-    namedWindow("My Window", 1);
-    //set the callback function for any mouse event
-    setMouseCallback("My Window", on_mouse, &p );
-    //show the image
-    imshow("My Window", left1);
-    // Wait until user press some key
-    waitKey(0);
-    xl1=p.x;
-    yl1=p.y;
-//    cout<<"xl1 is "<<p.x<<endl;
-//    cout<<"yl1 is "<<p.y<<endl;
-
-
-
-
-    //Create a window
-    namedWindow("My Window", 1);
-    //set the callback function for any mouse event
-    setMouseCallback("My Window", on_mouse, &p );
-    //show the image
-    imshow("My Window", right1);
-    // Wait until user press some key
-    waitKey(0);
-    xr1=p.x;
-    yr1=p.y;
-//    cout<<"xr1 is "<<p.x<<endl;
-//    cout<<"yr1 is "<<p.y<<endl;
-
-
-
-
-    float f=1060,b=119.91;
-    float z1,z2,x1,x2,y1,y2,dp1,dp2,dist_dep;
-
-
-    dp1=abs(xl-xr);
-//    cout<<"disparité 1:"<<dp1<<endl;
-
-    z1=(f*b)/(dp1);
-    x1=((xr)*z1)/f;
-    y1=((yr)*z1)/f;
-
-    dp2=abs(xl1-xr1);
-//    cout<<"disparité 2 est:"<<dp2<<endl;
-
-    z2=(f*b)/(dp2);
-    x2=(xl1*z2)/f;
-    y2=(yl1*z2)/f;
-
-
-    dist_dep=sqrt(pow((y2-y1),2)+pow((x2-x1),2)+pow((z2-z1),2));
-    cout<<"distance de déplacement:"<<dist_dep/1000<<"m"<<endl;
-
-
-    return 0;
-}
-
-#endif
-
-
-
 
 
 #if 1
@@ -158,6 +33,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata);
 
 std::fstream mycsvFile; // output File
 
+cv::Mat frameL;
 
 int g_run = 1;
 
@@ -184,7 +60,7 @@ int main(){
     // Video Left
     cv::namedWindow( "video left", cv::WINDOW_AUTOSIZE );
     g_cap.open( "C:/Users/hp/OneDrive/Bureau/Scenario43/1.avi" );
-    cv::Mat frameL;
+
 
 
     // Video Right
@@ -378,19 +254,25 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
         switch(leftClicksNumber) {
         case 1:
             vehicles[idVeh].points.phl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phl1, 10, SCALAR_RED);
             break;
         case 2:
-            vehicles[idVeh].points.phl2 = cv::Point(x, y);
+            vehicles[idVeh].points.phr1 = cv::Point(x, y);
+
+            vehicles[idVeh].depth(); // calcute the distance between the point and the camera
+
             break;
         case 3:
-            vehicles[idVeh].points.phr1 = cv::Point(x, y);
+            vehicles[idVeh].points.phl2 = cv::Point(x, y);
             break;
         case 4:
             vehicles[idVeh].points.phr2 = cv::Point(x, y);
 
-            vehicles[idVeh].calculateHeight();
+            vehicles[idVeh].disparity();
 
-            std::cout<<"Height: "<< vehicles[idVeh].features.dimensions.height <<"m"<<std::endl;
+            //vehicles[idVeh].calculateHeight();
+
+            //std::cout<<"Height: "<< vehicles[idVeh].features.dimensions.height <<"m"<<std::endl;
 
             std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
             break;
@@ -486,6 +368,7 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
 
     else if ( event == cv::EVENT_MOUSEMOVE )
     {
+        //win32api.SetCursor(win32api.LoadCursor(0, win32con.IDC_SIZEALL));
         //std::cout << "Mouse move over the window - position (" << x << ", " << y << ")" << std::endl;
     }
 }

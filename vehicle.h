@@ -88,6 +88,8 @@ class Vehicle {
         void calculateWidth();
         void calculateLength();
 
+        void disparity();
+        void depth();
 
 
         void Vehicle::calculateDistanceBetweenWheels();
