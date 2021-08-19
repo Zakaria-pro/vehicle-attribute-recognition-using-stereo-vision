@@ -175,95 +175,301 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
         vehicles[idVeh].id = idVeh;
 
         switch(leftClicksNumber) {
+
         case 1:
             vehicles[idVeh].points.phl1 = cv::Point(x, y);
             cv::circle(frameL, vehicles[idVeh].points.phl1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
             cv::imshow( "video left", frameL );
-
-//            vehicles[idVeh].points.phr1 = cv::Point(vehicles[idVeh].points.phl1.x-13, vehicles[idVeh].points.phl1.y-3);
-//            cv::circle(frameR, vehicles[idVeh].points.phr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
-//            cv::imshow( "video right", frameR );
-
             break;
-
 
         case 2:
             vehicles[idVeh].points.phr1 = cv::Point(x, y);
             cv::circle(frameR, vehicles[idVeh].points.phr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
             cv::imshow( "video right", frameR );
-            vehicles[idVeh].depth();
+            break;
 
+        case 3:
+            vehicles[idVeh].points.phl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phl2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 4:
+            vehicles[idVeh].points.phr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.phr2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateHeight();
+            std::cout<<"Height: "<< vehicles[idVeh].features.dimensions.height <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
+            break;
+
+        // -------------------------------------------------------
+        case 5:
+            vehicles[idVeh].points.pwl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwl1, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 6:
+            vehicles[idVeh].points.pwr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwr1, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 7:
+            vehicles[idVeh].points.pwl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwl2, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 8:
+            vehicles[idVeh].points.pwr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwr2, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateWidth();
+            std::cout<<"Width: "<< vehicles[idVeh].features.dimensions.width <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating LENGTH :" << std::endl;
             break;
 
 
 
-//        case 3:
-//            vehicles[idVeh].points.phl2 = cv::Point(x, y);
-//            cv::circle(frameL, vehicles[idVeh].points.phl2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
-//            cv::imshow( "video left", frameL );
+        // --------------------------------------------------------
+        case 9:
+            vehicles[idVeh].points.pll1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pll1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
 
-//            vehicles[idVeh].points.phr2 = cv::Point(vehicles[idVeh].points.phl2.x-13, vehicles[idVeh].points.phl2.y-3);
-//            cv::circle(frameR, vehicles[idVeh].points.phr2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
-//            cv::imshow( "video right", frameR );
+        case 10:
+            vehicles[idVeh].points.plr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.plr1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
 
-//            vehicles[idVeh].depth();
-            //vehicles[idVeh].disparity();
+        case 11:
+            vehicles[idVeh].points.pll2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pll2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
 
+        case 12:
+            vehicles[idVeh].points.plr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.plr2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
 
-            //vehicles[idVeh].depth();
-            //vehicles[idVeh].calculateHeight();
-            //std::cout<<"Height: "<< vehicles[idVeh].features.dimensions.height <<"m"<<std::endl;
+            vehicles[idVeh].calculateLength();
 
-//            std::cout << "---- ENTER Points for calculating WIDTH :" << std::endl;
-//            break;
-//        case 5:
-//            vehicles[idVeh].points.pwl1 = cv::Point(x, y);
-//            break;
-//        case 6:
-//            vehicles[idVeh].points.pwl2 = cv::Point(x, y);
-//            break;
-//        case 7:
-//            vehicles[idVeh].points.pwr1 = cv::Point(x, y);
-//            break;
-//        case 8:
-//            vehicles[idVeh].points.pwr2 = cv::Point(x, y);
+            std::cout<<"Length: "<< vehicles[idVeh].features.dimensions.length <<"m"<<std::endl;
 
-//            vehicles[idVeh].calculateWidth();
-
-//            std::cout<<"Width: "<< vehicles[idVeh].features.dimensions.width <<"m"<<std::endl;
-//            std::cout << "---- ENTER Points for calculating LENGTH :" << std::endl;
-//            break;
-//        case 9:
-//            vehicles[idVeh].points.pll1 = cv::Point(x, y);
-//            break;
-//        case 10:
-//            vehicles[idVeh].points.pll2 = cv::Point(x, y);
-//            break;
-//        case 11:
-//            vehicles[idVeh].points.plr1 = cv::Point(x, y);
-//            break;
-//        case 12:
-//            vehicles[idVeh].points.plr2 = cv::Point(x, y);
-
-//            vehicles[idVeh].calculateLength();
-
-//            std::cout<<"Length: "<< vehicles[idVeh].features.dimensions.length <<"m"<<std::endl;
-
-//            std::cout << "---- ENTER Points for calculating The Distance Between Wheels :" << std::endl;
-//            break;
+            std::cout << "---- ENTER Points for calculating The Distance Between Wheels :" << std::endl;
+            break;
 
 
+        ///////////////////////// distance between wheels
+        case 13:
+            vehicles[idVeh].points.pwhl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwhl1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
 
-//        default:
+        case 14:
+            vehicles[idVeh].points.pwhr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwhr1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
 
-//            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+        case 15:
+            vehicles[idVeh].points.pwhl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwhl2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
 
-//            vehicles[idVeh].showInfo();
+        case 16:
+            vehicles[idVeh].points.pwhr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwhr2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
 
-//            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+            vehicles[idVeh].calculateDistanceBetweenWheels();
+
+            std::cout<<"DistanceBetweenWheels: "<< vehicles[idVeh].features.distanceBetweenWheels <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating The Distance Between Headlights :" << std::endl;
+            break;
 
 
-//            // code block
+            ////////////////////// distance between headlights
+        case 17:
+            vehicles[idVeh].points.phdll1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phdll1, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 18:
+            vehicles[idVeh].points.phdlr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.phdlr1, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 19:
+            vehicles[idVeh].points.phdll2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phdll2, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 20:
+            vehicles[idVeh].points.phdlr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.phdlr2, 3, SCALAR_RED,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateDistanceBetweenHeadlights();
+
+            std::cout<<"distanceBetweenHeadlights: "<< vehicles[idVeh].features.distanceBetweenHeadlights <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating The Distance Between Handles :" << std::endl;
+            break;
+
+         //// distance between handles
+        case 21:
+            vehicles[idVeh].points.phdl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phdl1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 22:
+            vehicles[idVeh].points.phdr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.phdr1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 23:
+            vehicles[idVeh].points.phdl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.phdl2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 24:
+            vehicles[idVeh].points.phdr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.phdr2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateDistanceBetweenHandles();
+
+            std::cout<<"distanceBetweenHandles: "<< vehicles[idVeh].features.distanceBetweenHandles <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating Wheels diameter :" << std::endl;
+            break;
+
+
+
+        //////////////////// wheel diameter
+        case 25:
+            vehicles[idVeh].points.pwhdl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwhdl1, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 26:
+            vehicles[idVeh].points.pwhdr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwhdr1, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 27:
+            vehicles[idVeh].points.pwhdl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwhdl2, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 28:
+            vehicles[idVeh].points.pwhdr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwhdr2, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateLength();
+
+            std::cout<<"wheelDiameter: "<< vehicles[idVeh].features.wheelDiameter <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating Max height of the window :" << std::endl;
+            break;
+
+        /////////////////// max height of window
+        case 29:
+            vehicles[idVeh].points.pmwhl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pmwhl1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 30:
+            vehicles[idVeh].points.pmwhr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pmwhr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 31:
+            vehicles[idVeh].points.pll2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pll2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 32:
+            vehicles[idVeh].points.pmwhr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pmwhr2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateMaxWindowHeight();
+
+            std::cout<<"maxHeightOfWindows: "<< vehicles[idVeh].features.maxHeightOfWindows <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating The Distance Between window and ground :" << std::endl;
+            break;
+
+        /////////////////// distance between window and ground
+        case 33:
+            vehicles[idVeh].points.pwgl1 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwgl1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 34:
+            vehicles[idVeh].points.pwgr1 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwgr1, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+            break;
+
+        case 35:
+            vehicles[idVeh].points.pwgl2 = cv::Point(x, y);
+            cv::circle(frameL, vehicles[idVeh].points.pwgl2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video left", frameL );
+            break;
+
+        case 36:
+            vehicles[idVeh].points.pwgr2 = cv::Point(x, y);
+            cv::circle(frameR, vehicles[idVeh].points.pwgr2, 3, SCALAR_GREEN,CV_FILLED, 8,0);
+            cv::imshow( "video right", frameR );
+
+            vehicles[idVeh].calculateDistanceBetweenWindowAndGround();
+
+            std::cout<<"distanceBetweenWindowAndGround: "<< vehicles[idVeh].features.distanceBetweenWindowAndGround <<"m"<<std::endl;
+
+            std::cout << "---- ENTER Points for calculating The Distance Between Headlights :" << std::endl;
+            break;
+
+
+        default:
+
+
+            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+            vehicles[idVeh].showInfo();
+
+            std::cout << "--------------------------------------------------------------------------------" << std::endl;
+
+
+            // code block
 
         }
       }
