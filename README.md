@@ -3,4 +3,4 @@
 ## Resources : 
 * https://cppsecrets.com/users/140211510511010310497110117981049711848494864103109971051084699111109/C00-OpenCV-Moving-Around.php
 * https://fresh2refresh.com/c-programming/c-nested-structure/
-
+* https://www.stereolabs.com/zed/
