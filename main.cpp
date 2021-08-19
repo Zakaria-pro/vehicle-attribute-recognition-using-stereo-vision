@@ -335,25 +335,25 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
          //// distance between handles
         case 21:
             vehicles[idVeh].points.phdl1 = cv::Point(x, y);
-            cv::circle(frameL, vehicles[idVeh].points.phdl1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::circle(frameL, vehicles[idVeh].points.phdl1, 3, SCALAR_RED,CV_FILLED, 8,0);
             cv::imshow( "video left", frameL );
             break;
 
         case 22:
             vehicles[idVeh].points.phdr1 = cv::Point(x, y);
-            cv::circle(frameR, vehicles[idVeh].points.phdr1, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::circle(frameR, vehicles[idVeh].points.phdr1, 3, SCALAR_RED,CV_FILLED, 8,0);
             cv::imshow( "video right", frameR );
             break;
 
         case 23:
             vehicles[idVeh].points.phdl2 = cv::Point(x, y);
-            cv::circle(frameL, vehicles[idVeh].points.phdl2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::circle(frameL, vehicles[idVeh].points.phdl2, 3, SCALAR_RED,CV_FILLED, 8,0);
             cv::imshow( "video left", frameL );
             break;
 
         case 24:
             vehicles[idVeh].points.phdr2 = cv::Point(x, y);
-            cv::circle(frameR, vehicles[idVeh].points.phdr2, 3, SCALAR_YELLOW,CV_FILLED, 8,0);
+            cv::circle(frameR, vehicles[idVeh].points.phdr2, 3, SCALAR_RED,CV_FILLED, 8,0);
             cv::imshow( "video right", frameR );
 
             vehicles[idVeh].calculateDistanceBetweenHandles();
@@ -368,25 +368,25 @@ void CallBackFunc(int event, int x, int y, int flags, void* userdata)
         //////////////////// wheel diameter
         case 25:
             vehicles[idVeh].points.pwhdl1 = cv::Point(x, y);
-            cv::circle(frameL, vehicles[idVeh].points.pwhdl1, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::circle(frameL, vehicles[idVeh].points.pwhdl1, 3, SCALAR_WHITE,CV_FILLED, 8,0);
             cv::imshow( "video left", frameL );
             break;
 
         case 26:
             vehicles[idVeh].points.pwhdr1 = cv::Point(x, y);
-            cv::circle(frameR, vehicles[idVeh].points.pwhdr1, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::circle(frameR, vehicles[idVeh].points.pwhdr1, 3, SCALAR_WHITE,CV_FILLED, 8,0);
             cv::imshow( "video right", frameR );
             break;
 
         case 27:
             vehicles[idVeh].points.pwhdl2 = cv::Point(x, y);
-            cv::circle(frameL, vehicles[idVeh].points.pwhdl2, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::circle(frameL, vehicles[idVeh].points.pwhdl2, 3, SCALAR_WHITE,CV_FILLED, 8,0);
             cv::imshow( "video left", frameL );
             break;
 
         case 28:
             vehicles[idVeh].points.pwhdr2 = cv::Point(x, y);
-            cv::circle(frameR, vehicles[idVeh].points.pwhdr2, 3, SCALAR_BLACK,CV_FILLED, 8,0);
+            cv::circle(frameR, vehicles[idVeh].points.pwhdr2, 3, SCALAR_WHITE,CV_FILLED, 8,0);
             cv::imshow( "video right", frameR );
 
             vehicles[idVeh].calculateLength();
