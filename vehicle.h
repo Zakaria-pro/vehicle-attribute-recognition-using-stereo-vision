@@ -34,6 +34,52 @@ struct Points{
     // The two points in the right image
     cv::Point plr1, plr2;
 
+    /* ----- the points needed to calculate distance between wheels----- */
+
+    // The two points in the left image
+    cv::Point pwhl1, pwhl2;
+    // The two points in the right image
+    cv::Point pwhr1, pwhr2;
+
+
+    /* ----- the points needed to calculate distance between headlights----- */
+
+    // The two points in the left image
+    cv::Point phdll1, phdll2;
+    // The two points in the right image
+    cv::Point phdlr1, phdlr2;
+
+    /* ----- the points needed to calculate distance between handles----- */
+
+    // The two points in the left image
+    cv::Point phdl1, phdl2;
+    // The two points in the right image
+    cv::Point phdr1, phdr2;
+
+    /* ----- the points needed to calculate wheel diameter----- */
+
+    // The two points in the left image
+    cv::Point pwhdl1, pwhdl2;
+    // The two points in the right image
+    cv::Point pwhdr1, pwhdr2;
+
+
+    /* ----- the points needed to calculate max window height----- */
+
+    // The two points in the left image
+    cv::Point pmwhl1, pmwhl2;
+    // The two points in the right image
+    cv::Point pmwhr1, pmwhr2;
+
+
+    /* ----- the points needed to calculate distance between window and ground----- */
+
+    // The two points in the left image
+    cv::Point pwgl1, pwgl2;
+    // The two points in the right image
+    cv::Point pwgr1, pwgr2;
+
+
 };
 
 struct Dimension{
@@ -54,6 +100,7 @@ struct Features{
     struct Dimension dimensions;            // Hauteur, Largeur, et longueur.
     double distanceBetweenWheels;           // La distance entre les roues
     double distanceBetweenHeadlights;       // La distance entre les phares
+    double distanceBetweenHandles;
     struct Ratios ratios;                   // Calcul des ratios
     double maxHeightOfWindows;              // La hauteur maximum des fenêtres.
     double wheelDiameter;                   // Diamètres des roues.
@@ -88,17 +135,24 @@ class Vehicle {
         void calculateWidth();
         void calculateLength();
 
+        //void disparity();
+        //void depth();
 
 
-        void Vehicle::calculateDistanceBetweenWheels();
-        void Vehicle::calculateDistanceBetweenHeadlights();
+        void calculateDistanceBetweenWheels();
+        void calculateDistanceBetweenHeadlights();
+        void calculateDistanceBetweenHandles();
+        void calculateWheelsDiameter();
+        void calculateMaxWindowHeight();
+        void calculateDistanceBetweenWindowAndGround();
 
-        void Vehicle::calculateRatios();
+        void calculateRatios();
 
-        void Vehicle::calculateMaxWindowHeight();
-        void::Vehicle::calculateDistanceBetweenHandles();
-        void::Vehicle::calculateWheelsDiameter();
-        void::Vehicle::calculateDistanceBetweenWindowAndGround();
+
+
+
+
+
 
 
         void showInfo();
