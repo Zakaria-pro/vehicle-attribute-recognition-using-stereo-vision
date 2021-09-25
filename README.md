@@ -1,7 +1,7 @@
 # The Big Idea :
 ![feautures_extraction](https://user-images.githubusercontent.com/56237310/134772298-857d58ad-bac0-467d-a700-ca7a9818f662.jpg)
 
-# Our case
+# Our case : Using Stereo Vision
 ![Untitled drawing (1)](https://user-images.githubusercontent.com/56237310/126067384-a416a4b8-371b-43b1-a419-bbdc9b61bd35.png)
 
 ## Resources : 
